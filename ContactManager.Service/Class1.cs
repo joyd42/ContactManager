@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ContactManager.EF
+namespace ContactManager.Service
 {
     public class Class1
     {

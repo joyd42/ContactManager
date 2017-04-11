@@ -5,11 +5,11 @@ VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactManager", "ContactManager\ContactManager.csproj", "{77EECB56-7F0A-4EF4-BAE1-9448F76F71CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactManager.Model", "ContactManager.Business\ContactManager.Model.csproj", "{B7954B0B-6E9D-41C4-9524-8F6F0ABF4EC0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactManager.Model", "ContactManager.Model\ContactManager.Model.csproj", "{B7954B0B-6E9D-41C4-9524-8F6F0ABF4EC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactManager.Data", "ContactManager.EF\ContactManager.Data.csproj", "{7ECA08B4-9D70-41EC-BBDC-0E1C0ABFB56B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactManager.Data", "ContactManager.Data\ContactManager.Data.csproj", "{7ECA08B4-9D70-41EC-BBDC-0E1C0ABFB56B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactManager.Service", "ContactManager.Services\ContactManager.Service.csproj", "{29FDA01F-30E0-4319-8B2E-9579564B210C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactManager.Service", "ContactManager.Service\ContactManager.Service.csproj", "{29FDA01F-30E0-4319-8B2E-9579564B210C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

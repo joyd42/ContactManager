@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ContactManager.Business
+namespace ContactManager.Data
 {
     public class Class1
     {

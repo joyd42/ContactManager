@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ContactManager.Services
+namespace ContactManager.Model
 {
     public class Class1
     {

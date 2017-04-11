@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ContactManager.Business\ContactManager.Model.csproj" />
+    <ProjectReference Include="..\ContactManager.Model\ContactManager.Model.csproj" />
   </ItemGroup>
 
 </Project>
