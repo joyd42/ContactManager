@@ -10,10 +10,22 @@
 <body>
 
 <table>
+    <tr>
+        <th>Id</th>
+        <th>Naam</th>
+        <th>Straat</th>
+        <th>Gemeente</th>
+        <th>Land</th>
+    </tr>
+
     @foreach (var contact in Model.Contacten)
     {
         <tr>
+            <td>@contact.Id</td>
             <td>@contact.Naam</td>
+            <td>@contact.Adres.Straat</td>
+            <td>@contact.Adres.Locatie</td>
+            <td>@contact.Adres.Land</td>
         </tr>
     }
 </table>

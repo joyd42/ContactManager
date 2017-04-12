@@ -6,6 +6,7 @@ namespace ContactManager.Model
 {
     public class Telefoon
     {
+        internal Telefoon() { }
         protected internal Telefoon(string naam, string nummer)
         {
             Naam = naam;

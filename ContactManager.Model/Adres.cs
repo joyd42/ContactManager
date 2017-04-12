@@ -14,6 +14,7 @@ namespace ContactManager.Model
         public string Straat { get; set; }
         public string Locatie { get; set; }
         public string Land { get; set; }
+        public Contact Contact { get; set; }
 
         public override string ToString()
         {

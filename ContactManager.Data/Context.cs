@@ -66,10 +66,12 @@ namespace ContactManager.Data
                 .HasKey(c => c.Id);
             modelBuilder.Entity<Contact>()
                 .Property(c => c.Naam);
+
             modelBuilder.Entity<Contact>()
                 .HasOne(c => c.Adres)
-                .WithOne()
+                .WithOne(a => a.Contact)
                 .HasForeignKey<Adres>(a => a.Id);
+
             modelBuilder.Entity<Contact>()
                 .HasMany(c => c.Telefoons);
         }

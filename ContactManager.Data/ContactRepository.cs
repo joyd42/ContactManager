@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ContactManager.Model;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace ContactManager.Data
@@ -18,8 +19,10 @@ namespace ContactManager.Data
 
         public IEnumerable<Contact> AlleContacten()
         {
-            return Context.Set<Contact>().ToList();
+            return QueryContacten().ToList();
         }
+
+
 
 
 
@@ -28,8 +31,12 @@ namespace ContactManager.Data
 
         private IQueryable<Contact> QueryContacten()
         {
-            return Query<Contact>();
+            return Query<Contact>()
+                .Include(c => c.Adres)
+                .Include(c => c.Telefoons);
         }
+
+
 
         private IQueryable<T> Query<T>() where T : class
         {
