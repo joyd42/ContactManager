@@ -33,13 +33,19 @@
     {
         <tr>
             <td>@contact.Id</td>
-            <td>@contact.Naam</td>
+            <td>@Html.ActionLink(contact.Naam, "Contacten", new {actiefContactId = contact.Id})</td>
             <td>@contact.Adres.Straat</td>
             <td>@contact.Adres.Locatie</td>
             <td>@contact.Adres.Land</td>
         </tr>
     }
 </table>
+    
+<div style="position: absolute; top: 10px; right: 10px">
+    Naam: @Model.ActiefContact.Naam<br/>
+    Straat: @Model.ActiefContact.Adres.Straat<br />
+    Gemeente: @Model.ActiefContact.Adres.Locatie<br />
+</div>
 
 
 

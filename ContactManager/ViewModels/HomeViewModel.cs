@@ -27,7 +27,31 @@ namespace ContactManager.ViewModels
             }
         }
 
-        
+        public int ActiefContactId { get; set; }
+
+        public Contact ActiefContact
+        {
+            get
+            {
+                if (ActiefContactId == 0)
+                {
+                    return new Contact()
+                    {
+                        Naam = "",
+                        Adres =
+                        {
+                            Locatie = "",
+                            Land = ""
+                        }
+                    };
+                }
+                else
+                {
+                    return Contacten.First(c => c.Id.Equals(ActiefContactId));
+                }
+                
+            }
+        }
 
     }
 }
