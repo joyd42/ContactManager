@@ -9,6 +9,7 @@ namespace ContactManager.Model
         internal Adres()
         {
         }
+        public int Id { get; set; }
 
         public string Straat { get; set; }
         public string Locatie { get; set; }

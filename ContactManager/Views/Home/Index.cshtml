@@ -1,0 +1,22 @@
+﻿@using ContactManager.ViewModels
+@using ContactManager.Controllers
+@model HomeViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Manager Index</title>
+</head>
+<body>
+
+<table>
+    @foreach (var contact in Model.Contacten)
+    {
+        <tr>
+            <td>@contact.Naam</td>
+        </tr>
+    }
+</table>
+
+</body>
+</html>
