@@ -2,6 +2,8 @@
 @using ContactManager.Controllers
 @model HomeViewModel
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +11,16 @@
 </head>
 <body>
 
-<table>
+@using (Html.BeginForm("Contacten", "Home"))
+{
+    <p>
+        Naam: @Html.TextBox("filter")
+        <input type="submit" value="Zoek"/>
+
+    </p>
+}
+
+<table style="height: 80%">
     <tr>
         <th>Id</th>
         <th>Naam</th>
@@ -18,7 +29,7 @@
         <th>Land</th>
     </tr>
 
-    @foreach (var contact in Model.Contacten)
+    @foreach (var contact in Model.ContactenMetNaam)
     {
         <tr>
             <td>@contact.Id</td>
@@ -29,6 +40,9 @@
         </tr>
     }
 </table>
+
+
+
 
 </body>
 </html>
