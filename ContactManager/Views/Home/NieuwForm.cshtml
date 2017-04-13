@@ -7,28 +7,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Nieuwe @Model.VoorbeeldContact.GetType().Name</title>
+    <title>Nieuwe @Model.Contact.GetType().Name</title>
 </head>
 <body>
+<h1>Nieuwe @Model.Contact.GetType().Name</h1>
 @using (Html.BeginForm("Nieuw", "Home", FormMethod.Get))
 {
     <p>
-        @Html.LabelFor(m => m.VoorbeeldContact.Naam)
-        @Html.EditorFor(m => m.VoorbeeldContact.Naam)
-        <br/>
-        
-        @Html.LabelFor(m => m.VoorbeeldContact.Adres.Straat)
-        @Html.EditorFor(m => m.VoorbeeldContact.Adres.Straat)   
-        <br/>
-        
-        @Html.Label("Gemeente")
-        @Html.EditorFor(m => m.VoorbeeldContact.Adres.Locatie)  
-        <br/>
-        
-        @Html.LabelFor(m => m.VoorbeeldContact.Adres.Land)
-        @Html.EditorFor(m => m.VoorbeeldContact.Adres.Land)  
+        <input type="hidden" name="contactType" value="@Model.Contact.GetType()" />
+
+        @Html.LabelFor(m => m.Contact.Naam)
+        @Html.EditorFor(m => m.Contact.Naam)
         <br/>
 
+        @Html.LabelFor(m => m.Contact.Adres.Straat)
+        @Html.EditorFor(m => m.Contact.Adres.Straat)
+        <br/>
+
+        @Html.Label("Gemeente")
+        @Html.EditorFor(m => m.Contact.Adres.Locatie)
+        <br/>
+
+        @Html.LabelFor(m => m.Contact.Adres.Land)
+        @Html.EditorFor(m => m.Contact.Adres.Land)
+        <br/>
+        <input type="submit" value="Bewaar" />
     </p>
 
 }

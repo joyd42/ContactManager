@@ -10,9 +10,13 @@ namespace ContactManager.Controllers.Home
 {
     public partial class HomeController
     {
-        public IActionResult Nieuw(string naam, string straat, string gemeente)
+        public IActionResult Nieuw(Contact contact)
         {
-            return null;
+            var nieuwContact = contact;
+
+
+            
+            return View(null);
 
         }
 
@@ -20,7 +24,7 @@ namespace ContactManager.Controllers.Home
         {
             var model = new NieuwViewModel
             {
-                VoorbeeldContact = NieuwContactVanJuisteSoort(contactSoort)
+                Contact = NieuwContactVanJuisteSoort(contactSoort)
             };
             return View(model);
         }
