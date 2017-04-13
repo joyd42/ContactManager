@@ -6,7 +6,7 @@ using ContactManager.Model;
 
 namespace ContactManager.ViewModels
 {
-    public class HomeViewModel
+    public class ContactenViewModel
     {
 
         public IEnumerable<Contact> Contacten { get; set; }

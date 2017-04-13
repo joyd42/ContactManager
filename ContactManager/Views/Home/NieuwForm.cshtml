@@ -1,0 +1,37 @@
+﻿@using System.Runtime.InteropServices.ComTypes
+@using ContactManager.ViewModels
+@using ContactManager.Controllers
+@using ContactManager.Model
+@model NieuwViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nieuwe @Model.VoorbeeldContact.GetType().Name</title>
+</head>
+<body>
+@using (Html.BeginForm("Nieuw", "Home", FormMethod.Get))
+{
+    <p>
+        @Html.LabelFor(m => m.VoorbeeldContact.Naam)
+        @Html.EditorFor(m => m.VoorbeeldContact.Naam)
+        <br/>
+        
+        @Html.LabelFor(m => m.VoorbeeldContact.Adres.Straat)
+        @Html.EditorFor(m => m.VoorbeeldContact.Adres.Straat)   
+        <br/>
+        
+        @Html.Label("Gemeente")
+        @Html.EditorFor(m => m.VoorbeeldContact.Adres.Locatie)  
+        <br/>
+        
+        @Html.LabelFor(m => m.VoorbeeldContact.Adres.Land)
+        @Html.EditorFor(m => m.VoorbeeldContact.Adres.Land)  
+        <br/>
+
+    </p>
+
+}
+
+</body>
+</html>
