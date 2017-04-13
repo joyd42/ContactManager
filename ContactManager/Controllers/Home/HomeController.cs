@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ContactManager.Data;
 using ContactManager.Model;
+using ContactManager.Service.Interfaces;
 using ContactManager.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +11,9 @@ namespace ContactManager.Controllers.Home
 {
     public class HomeController : Controller
     {
-        private readonly IContactRepository _contactRepository;
+        private readonly IToonContactRepository _contactRepository;
 
-        public HomeController(IContactRepository contactRepository)
+        public HomeController(IToonContactRepository contactRepository)
         {
             _contactRepository = contactRepository;
         }

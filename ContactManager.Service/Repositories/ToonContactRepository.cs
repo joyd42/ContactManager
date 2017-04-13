@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using ContactManager.Data;
 using ContactManager.Model;
+using ContactManager.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-
-namespace ContactManager.Data
+namespace ContactManager.Service.Repositories
 {
-    public class ContactRepository : IContactRepository
+    public class ToonContactRepository : IToonContactRepository
     {
-        protected ContactRepository() { }
+        protected ToonContactRepository() { }
         protected Context Context { get; set; }
 
-        public ContactRepository(Context context)
+        public ToonContactRepository(Context context)
         {
             Context = context;
         }

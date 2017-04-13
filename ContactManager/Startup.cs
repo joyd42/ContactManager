@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ContactManager.Data;
+using ContactManager.Service.Interfaces;
+using ContactManager.Service.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -32,7 +34,7 @@ namespace ContactManager
         {
             services.AddMvc();
             services.AddSingleton(Configuration);
-            services.AddScoped<IContactRepository, ContactRepository>();
+            services.AddScoped<IToonContactRepository, ToonContactRepository>();
             services.AddDbContext<Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ContactenCore")));
         }
@@ -42,7 +44,7 @@ namespace ContactManager
             IApplicationBuilder app, 
             IHostingEnvironment env, 
             ILoggerFactory loggerFactory,
-            IContactRepository contactRepository)
+            IToonContactRepository contactRepository)
         {
             loggerFactory.AddConsole();
 
