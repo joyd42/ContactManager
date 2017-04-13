@@ -2,14 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ContactManager.Service.Interfaces;
 using ContactManager.Model;
 using ContactManager.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ContactManager.Controllers.Home
+namespace ContactManager.Controllers
 {
-    public partial class HomeController
+    public class NieuwController : Controller
     {
+        private readonly INieuwContactRepository _nieuwContactRepository;
+
+        public NieuwController(INieuwContactRepository nieuwContactRepository)
+        {
+            _nieuwContactRepository = nieuwContactRepository;
+        }
+
+
+
         public IActionResult Nieuw(Contact contact)
         {
             var nieuwContact = contact;

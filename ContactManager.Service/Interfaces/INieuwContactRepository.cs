@@ -5,7 +5,7 @@ using ContactManager.Model;
 
 namespace ContactManager.Service.Interfaces
 {
-    interface INieuwContactRepository
+    public interface INieuwContactRepository
     {
         void Bewaar();
         void VoegContactToe(Contact contact);

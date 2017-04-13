@@ -5,8 +5,8 @@ using ContactManager.Service.Interfaces;
 
 namespace ContactManager.Service.Repositories
 {
-    class WijzigContactRepository : ToonContactRepository, IWijzigContactRepository, IToonContactRepository
-    {
+    //class WijzigContactRepository : ToonContactRepository, IWijzigContactRepository, INieuwContactRepository
+    //{
 
-    }
+    //}
 }

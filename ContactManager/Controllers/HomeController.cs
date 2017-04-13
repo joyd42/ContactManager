@@ -1,11 +1,28 @@
 ﻿using ContactManager.Model;
+using ContactManager.Service.Interfaces;
 using ContactManager.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ContactManager.Controllers.Home
+// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace ContactManager.Controllers
 {
-    public partial class HomeController
+    public class HomeController : Controller
     {
+        private readonly IToonContactRepository _contactRepository;
+
+        public HomeController(IToonContactRepository contactRepository)
+        {
+            _contactRepository = contactRepository;
+        }
+
+        // GET: /<controller>/
+        public IActionResult Index()
+        {
+
+            return RedirectToAction(nameof(Contacten));
+        }
+
         public IActionResult Contacten(string filter, int actiefContactId, string actiefContactSoort)
         {
             var model = new ContactenViewModel
@@ -31,7 +48,7 @@ namespace ContactManager.Controllers.Home
                 {
                     Naam = "",
                     Id = 0,
-                    Adres = {Id = 0, Land = "", Locatie = "", Straat = ""}
+                    Adres = { Id = 0, Land = "", Locatie = "", Straat = "" }
                 };
             }
 

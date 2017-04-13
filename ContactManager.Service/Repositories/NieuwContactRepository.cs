@@ -7,7 +7,7 @@ using ContactManager.Service.Interfaces;
 
 namespace ContactManager.Service.Repositories
 {
-    class NieuwContactRepository : INieuwContactRepository
+    public class NieuwContactRepository : INieuwContactRepository
     {
         protected NieuwContactRepository() { }
         protected Context Context { get; set; }

@@ -11,7 +11,7 @@
 </head>
 <body>
 <h1>Nieuwe @Model.Contact.GetType().Name</h1>
-@using (Html.BeginForm("Nieuw", "Home", FormMethod.Get))
+@using (Html.BeginForm("Nieuw", "Nieuw", FormMethod.Get))
 {
     <p>
         <input type="hidden" name="contactType" value="@Model.Contact.GetType()" />
