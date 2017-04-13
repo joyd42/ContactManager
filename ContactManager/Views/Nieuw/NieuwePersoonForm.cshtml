@@ -1,0 +1,43 @@
+﻿@using System.Runtime.InteropServices.ComTypes
+@using ContactManager.ViewModels
+@using ContactManager.Controllers
+@using ContactManager.Model
+@model NieuwViewModel
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nieuwe @Model.Persoon.GetType().Name</title>
+</head>
+<body>
+<h1>Nieuwe @Model.Persoon.GetType().Name</h1>
+@using (Html.BeginForm("NieuwePersoon", "Nieuw", FormMethod.Get))
+{
+    <p>
+        <input type="hidden" name="contactSoort" value="@Model.Persoon.GetType()" />
+
+        @Html.LabelFor(m => m.Persoon.Naam)
+        @Html.EditorFor(m => m.Persoon.Naam)
+        <br/>
+
+        @Html.LabelFor(m => m.Persoon.Adres.Straat)
+        @Html.EditorFor(m => m.Persoon.Adres.Straat)
+        <br/>
+
+        @Html.Label("Gemeente")
+        @Html.EditorFor(m => m.Persoon.Adres.Locatie)
+        <br/>
+
+        @Html.LabelFor(m => m.Persoon.Adres.Land)
+        @Html.EditorFor(m => m.Persoon.Adres.Land)
+        <br/>
+        <input type="submit" value="Bewaar" />
+    </p>
+
+}
+
+</body>
+</html>

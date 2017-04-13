@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ContactManager.Model;
 using ContactManager.Service.Interfaces;
-using ContactManager.Model;
 using ContactManager.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,38 +15,35 @@ namespace ContactManager.Controllers
         }
 
 
-
-        public IActionResult Nieuw(Contact contact)
+        public IActionResult NieuwePersoon(Persoon persoon)
         {
-            var nieuwContact = contact;
-
-
-            
-            return View(null);
-
+            _nieuwContactRepository.VoegPersoonToeEnBewaar(persoon);
+            return RedirectToAction("Contacten", "Home");
         }
 
-        public IActionResult NieuwForm(ContactSoort contactSoort)
+        public IActionResult NieuwePersoonForm()
         {
             var model = new NieuwViewModel
             {
-                Contact = NieuwContactVanJuisteSoort(contactSoort)
+                Persoon = new Persoon()
             };
             return View(model);
         }
 
-        private static Contact NieuwContactVanJuisteSoort(ContactSoort contactSoort)
+        public IActionResult NieuweOrganisatie(Organisatie organisatie)
         {
-            Contact contact;
-            if (contactSoort == ContactSoort.Organisatie)
-            {
-                contact = new Organisatie();
-            }
-            else
-            {
-                contact = new Persoon();
-            }
-            return contact;
+            _nieuwContactRepository.VoegOrganisatieToeEnBewaar(organisatie);
+            return RedirectToAction("Contacten", "Home");
         }
+
+        public IActionResult NieuweOrganisatieForm()
+        {
+            var model = new NieuwViewModel
+            {
+                Organisatie = new Organisatie()
+            };
+            return View(model);
+        }
+
     }
 }

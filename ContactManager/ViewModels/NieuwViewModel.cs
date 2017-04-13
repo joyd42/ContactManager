@@ -8,6 +8,7 @@ namespace ContactManager.ViewModels
 {
     public class NieuwViewModel
     {
-        public Contact Contact { get; set; }
+        public Persoon Persoon { get; set; }
+        public Organisatie Organisatie { get; set; }
     }
 }

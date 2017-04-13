@@ -23,14 +23,14 @@
     </p>
 }
 
-@using (Html.BeginForm("NieuwForm", "Nieuw", FormMethod.Get))
+@using (Html.BeginForm("NieuwePersoonForm", "Nieuw", FormMethod.Get))
 {
-    <button type="button" onclick="location.href = '@Url.Action("NieuwForm", "Nieuw", new {ContactSoort = ContactSoort.Persoon})'">Maak @ContactSoort.Persoon.ToString()</button>
+    <button type="button" onclick="location.href = '@Url.Action("NieuwePersoonForm", "Nieuw")'">Maak @ContactSoort.Persoon.ToString()</button>
 }
 
-@using (Html.BeginForm("NieuwForm", "Nieuw", FormMethod.Get))
+@using (Html.BeginForm("NieuweOrganisatieForm", "Nieuw", FormMethod.Get))
 {
-    <button type="button" onclick="location.href = '@Url.Action("NieuwForm", "Nieuw", new {ContactSoort = ContactSoort.Organisatie})'">Maak @ContactSoort.Organisatie.ToString()</button>
+    <button type="button" onclick="location.href = '@Url.Action("NieuweOrganisatieForm", "Nieuw")'">Maak @ContactSoort.Organisatie.ToString()</button>
 }
 
 <table style="height: 80%">

@@ -21,14 +21,25 @@ namespace ContactManager.Service.Repositories
             Context.SaveChanges();
         }
 
-        public void VoegContactToe(Contact contact)
+        public void VoegOrganisatieToe(Organisatie organisatie)
         {
-            VoegToe<Contact>(contact);
+            VoegToe<Organisatie>(organisatie);
         }
 
-        public void VoegContactToeEnBewaar(Contact contact)
+        public void VoegOrganisatieToeEnBewaar(Organisatie organisatie)
         {
-            VoegContactToe(contact);
+            VoegOrganisatieToe(organisatie);
+            Bewaar();
+        }
+
+        public void VoegPersoonToe(Persoon persoon)
+        {
+            VoegToe<Persoon>(persoon);
+        }
+
+        public void VoegPersoonToeEnBewaar(Persoon persoon)
+        {
+            VoegPersoonToe(persoon);
             Bewaar();
         }
 
