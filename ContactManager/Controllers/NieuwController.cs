@@ -18,7 +18,7 @@ namespace ContactManager.Controllers
         public IActionResult NieuwePersoon(Persoon persoon)
         {
             _nieuwContactRepository.VoegPersoonToeEnBewaar(persoon);
-            return RedirectToAction("Contacten", "Home");
+            return RedirectToAction("LaatstToegevoegdContactMetNaam", "Home", new { naam = persoon.Naam, actiefContactSoort = "Persoon" });
         }
 
         public IActionResult NieuwePersoonForm()

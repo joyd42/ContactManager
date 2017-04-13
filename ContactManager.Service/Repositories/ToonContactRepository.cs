@@ -24,7 +24,7 @@ namespace ContactManager.Service.Repositories
                     .ToList();
         }
 
-        public IEnumerable<Contact> ContactenMetKlantNaam(string naam)
+        public IEnumerable<Contact> ContactenMetNaam(string naam)
         {
             return QueryContacten()
                     .Where(c => c.Naam.Contains(naam))

@@ -1,4 +1,5 @@
-﻿using ContactManager.Model;
+﻿using System.Linq;
+using ContactManager.Model;
 using ContactManager.Service.Interfaces;
 using ContactManager.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -9,11 +10,11 @@ namespace ContactManager.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IToonContactRepository _contactRepository;
+        private readonly IToonContactRepository _toonContactRepository;
 
-        public HomeController(IToonContactRepository contactRepository)
+        public HomeController(IToonContactRepository toonContactRepository)
         {
-            _contactRepository = contactRepository;
+            _toonContactRepository = toonContactRepository;
         }
 
         // GET: /<controller>/
@@ -28,8 +29,8 @@ namespace ContactManager.Controllers
             var model = new ContactenViewModel
             {
                 Contacten = string.IsNullOrEmpty(filter)
-                    ? _contactRepository.AlleContacten()
-                    : _contactRepository.ContactenMetKlantNaam(filter),
+                    ? _toonContactRepository.AlleContacten()
+                    : _toonContactRepository.ContactenMetNaam(filter),
                 Filter = filter,
                 ActiefContactId = actiefContactId,
                 ActiefContact = GeefActiefContact(actiefContactId, actiefContactSoort)
@@ -37,6 +38,14 @@ namespace ContactManager.Controllers
 
 
             return View(model);
+        }
+
+        public IActionResult LaatstToegevoegdContactMetNaam(string naam, string actiefContactSoort)
+        {
+            var contactLijst = _toonContactRepository.ContactenMetNaam(naam);
+            var id = contactLijst.Select(contact => contact.Id).Max();
+
+            return RedirectToAction(nameof(Contacten), new { actiefContactId = id, actiefContactSoort = actiefContactSoort });
         }
 
         private Contact GeefActiefContact(int actiefContactId, string actiefContactSoort)
@@ -54,11 +63,11 @@ namespace ContactManager.Controllers
 
             else if (actiefContactSoort == nameof(Organisatie))
             {
-                actiefContact = _contactRepository.OrganisatieMetId(actiefContactId);
+                actiefContact = _toonContactRepository.OrganisatieMetId(actiefContactId);
             }
             else if (actiefContactSoort == nameof(Persoon))
             {
-                actiefContact = _contactRepository.PersoonMetId(actiefContactId);
+                actiefContact = _toonContactRepository.PersoonMetId(actiefContactId);
             }
 
             return actiefContact;

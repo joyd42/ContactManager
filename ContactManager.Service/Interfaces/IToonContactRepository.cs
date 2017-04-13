@@ -6,7 +6,7 @@ namespace ContactManager.Service.Interfaces
     public interface IToonContactRepository
     {
         IEnumerable<Contact> AlleContacten();
-        IEnumerable<Contact> ContactenMetKlantNaam(string naam);
+        IEnumerable<Contact> ContactenMetNaam(string naam);
         Organisatie OrganisatieMetId(int id);
         Persoon PersoonMetId(int id);
     }
