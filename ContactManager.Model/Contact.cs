@@ -11,17 +11,17 @@ namespace ContactManager.Model
         public string Naam { get; set; }
         public Adres Adres { get; protected set; } = new Adres();
 
-        public string Mugshot { get; set; }
+        
 
 
         public ICollection<Telefoon> Telefoons { get; protected set; } = new List<Telefoon>();
 
-        public void AddTelefoon(string naam, string nummer)
+        public void VoegTelefoonToe(string naam, string nummer)
         {
             Telefoons.Add(new Telefoon(naam, nummer));
         }
 
-        public void RemoveTelefoon(Telefoon telefoon)
+        public void VerwijderTelefoon(Telefoon telefoon)
         {
             Telefoons.Remove(telefoon);
         }

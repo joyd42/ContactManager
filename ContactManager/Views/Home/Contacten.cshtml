@@ -1,5 +1,7 @@
-﻿@using ContactManager.ViewModels
+﻿@using System.Runtime.InteropServices.ComTypes
+@using ContactManager.ViewModels
 @using ContactManager.Controllers
+@using ContactManager.Model
 @model HomeViewModel
 
 
@@ -11,10 +13,11 @@
 </head>
 <body>
 
-@using (Html.BeginForm("Contacten", "Home"))
+@using (Html.BeginForm("Contacten", "Home", FormMethod.Get))
 {
     <p>
         Naam: @Html.TextBox("filter")
+        <input type="hidden" name="actiefContactId" value="@Model.ActiefContactId"/>
         <input type="submit" value="Zoek"/>
 
     </p>
@@ -22,18 +25,18 @@
 
 <table style="height: 80%">
     <tr>
-        <th>Id</th>
+        <th>Soort</th>
         <th>Naam</th>
         <th>Straat</th>
         <th>Gemeente</th>
         <th>Land</th>
     </tr>
 
-    @foreach (var contact in Model.ContactenMetNaam)
+    @foreach (var contact in Model.Contacten)
     {
         <tr>
-            <td>@contact.Id</td>
-            <td>@Html.ActionLink(contact.Naam, "Contacten", new {actiefContactId = contact.Id})</td>
+            <td>@contact.GetType().Name</td>
+            <td>@Html.ActionLink(contact.Naam, "Contacten", new {Filter =  Model.Filter, actiefContactId = contact.Id, actiefContactSoort = contact.GetType().Name })</td>
             <td>@contact.Adres.Straat</td>
             <td>@contact.Adres.Locatie</td>
             <td>@contact.Adres.Land</td>
@@ -45,8 +48,40 @@
     Naam: @Model.ActiefContact.Naam<br/>
     Straat: @Model.ActiefContact.Adres.Straat<br />
     Gemeente: @Model.ActiefContact.Adres.Locatie<br />
-</div>
+    Telefoon nummers: <br/>
 
+    @foreach (var telefoon in Model.ActiefContact.Telefoons)
+    {
+        @telefoon.Naam <text>: </text> @telefoon.Nummer <br/>  
+    }
+    
+    @if (@Model.ActiefContact.GetType().Name == "Persoon")
+    {
+        <text>Geboortedatum:</text>
+        var persoon = (Persoon) Model.ActiefContact;
+        if (persoon.GeboorteDatum != null)
+        {
+            @persoon.GeboorteDatum.Value.ToString("dd-MM-yyyy")
+        }
+        ;
+        <br/>
+        <text>Foto:</text>
+        <img src="@persoon.Mugshot"/>
+    }
+    else
+    {
+        <text>Contactpersoon:</text>
+        var organisatieAlsContact = Model.ActiefContact;
+        if (organisatieAlsContact != null && organisatieAlsContact.Id != 0)
+        {
+            var organisatie = (Organisatie) organisatieAlsContact;
+            if (organisatie.ContactPersoon != null)
+            {
+                @Html.ActionLink(organisatie.ContactPersoon.Naam, "Contacten", new {Model.Filter, actiefContactId = organisatie.ContactPersoon.Id, actiefContactSoort = organisatie.ContactPersoon.GetType().Name})
+            }
+        }
+    }
+</div>
 
 
 

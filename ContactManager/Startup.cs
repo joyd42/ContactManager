@@ -60,6 +60,7 @@ namespace ContactManager
             }
 
             app.UseMvcWithDefaultRoute();
+            app.UseStaticFiles();
 
 
             app.Run(async (context) =>

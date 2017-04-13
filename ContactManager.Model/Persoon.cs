@@ -6,6 +6,8 @@ namespace ContactManager.Model
     {
         public DateTime? GeboorteDatum { get; set; }
 
+        public string Mugshot { get; set; }
+
         public override string ToString()
         {
             return $"{base.ToString()}, {nameof(GeboorteDatum)}: {GeboorteDatum}";
