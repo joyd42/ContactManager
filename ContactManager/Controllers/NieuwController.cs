@@ -2,9 +2,12 @@
 using ContactManager.Service.Interfaces;
 using ContactManager.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace ContactManager.Controllers
+
 {
+
     public class NieuwController : Controller
     {
         private readonly INieuwContactRepository _nieuwContactRepository;
@@ -15,8 +18,15 @@ namespace ContactManager.Controllers
         }
 
 
-        public IActionResult NieuwePersoon(Persoon persoon)
+
+        public IActionResult NieuwePersoon(Persoon persoon, string[] telefoonNaam, string[] telefoonNummer)
         {
+            for (int i = 0; i < telefoonNaam.Length; i++)
+            {
+                persoon.VoegTelefoonToe(telefoonNaam[i], telefoonNummer[i]);
+            }
+
+
             _nieuwContactRepository.VoegPersoonToeEnBewaar(persoon);
             return RedirectToAction("LaatstToegevoegdContactMetNaam", "Home", new { naam = persoon.Naam, actiefContactSoort = "Persoon" });
         }
@@ -26,6 +36,7 @@ namespace ContactManager.Controllers
             var model = new NieuwViewModel
             {
                 Persoon = new Persoon()
+
             };
             return View(model);
         }

@@ -14,7 +14,7 @@ namespace ContactManager.Model
         
 
 
-        public ICollection<Telefoon> Telefoons { get; protected set; } = new List<Telefoon>();
+        public ICollection<Telefoon> Telefoons { get;  set; } = new List<Telefoon>();
 
         public void VoegTelefoonToe(string naam, string nummer)
         {

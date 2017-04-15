@@ -11,13 +11,15 @@
 <html>
 <head>
     <title>Nieuwe @Model.Persoon.GetType().Name</title>
+    <script type="text/javascript" src="~/js/NieuwContactJavascripts.js"></script>
+
 </head>
 <body>
 <h1>Nieuwe @Model.Persoon.GetType().Name</h1>
-@using (Html.BeginForm("NieuwePersoon", "Nieuw", FormMethod.Get))
+@using (Html.BeginForm("NieuwePersoon", "Nieuw", FormMethod.Post))
 {
     <p>
-        <input type="hidden" name="contactSoort" value="@Model.Persoon.GetType()" />
+        @*<input type="hidden" name="contactSoort" value="@Model.Persoon.GetType()" />*@
 
         @Html.LabelFor(m => m.Persoon.Naam)
         @Html.EditorFor(m => m.Persoon.Naam)
@@ -35,8 +37,12 @@
         @Html.EditorFor(m => m.Persoon.Adres.Land)
         <br/>
          
-        @Html.LabelFor(m => m.Persoon.Telefoons)
-        @Html.EditorFor(m => m.Persoon.Telefoons)
+
+
+        <button onclick="nieuweTelefoon()" type="button">Nieuwe Telefoon</button>
+
+        <div id="telefoonVelden"><span id="spanToInsertAfter"></span></div>
+
 
         <input type="submit" value="Bewaar" />
     </p>
