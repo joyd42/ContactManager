@@ -41,7 +41,7 @@
         <div id="telefoonVelden"><span id="spanToInsertAfter"></span></div>
 
         @Html.LabelFor(m => m.Persoon.GeboorteDatum)
-        <input class="date" name="GeboorteDatum"/>
+        <input type="date" class="datumKiezer" name="Persoon.GeboorteDatum"/>
         
         <br />
 
@@ -59,7 +59,7 @@
 <script>
     $(document).ready(function() {
         // create DatePicker from input HTML element
-        $(".datumKiezer").DatePicker();
+        $(".datumKiezer").datepicker();
 
     });
 </script>

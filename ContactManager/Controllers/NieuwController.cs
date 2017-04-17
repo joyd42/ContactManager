@@ -1,4 +1,5 @@
-﻿using ContactManager.Model;
+﻿using System;
+using ContactManager.Model;
 using ContactManager.Service.Interfaces;
 using ContactManager.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,8 @@ namespace ContactManager.Controllers
             {
                 persoon.VoegTelefoonToe(telefoonNaam[i], telefoonNummer[i]);
             }
+
+            //persoon.GeboorteDatum = DateTime.Parse(geboorteDatum);
 
 
             _nieuwContactRepository.VoegPersoonToeEnBewaar(persoon);
