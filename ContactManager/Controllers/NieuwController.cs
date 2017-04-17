@@ -4,9 +4,7 @@ using ContactManager.Service.Interfaces;
 using ContactManager.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using ContactManager.Service.HelperClasses;
 using Newtonsoft.Json;
-using NonFactors.Mvc.Lookup;
 
 namespace ContactManager.Controllers
 
@@ -59,15 +57,6 @@ namespace ContactManager.Controllers
 
             };
             return View(model);
-        }
-
-
-        public JsonResult People(LookupFilter filter)
-        {
-            var peopleLookup = new PeopleLookup(_nieuwContactRepository) { Filter = filter};
-            var peopleLookupData = peopleLookup.GetData();
-            var peopleLookupDataInJson = Json(peopleLookupData);
-            return Json(new PeopleLookup(_nieuwContactRepository) { Filter = filter }.GetData());
         }
 
         public JsonResult Personen(string naam)

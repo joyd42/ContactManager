@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ContactManager.Data;
-using ContactManager.Service.HelperClasses;
 using ContactManager.Service.Interfaces;
 using ContactManager.Service.Repositories;
 using Microsoft.AspNetCore.Builder;
