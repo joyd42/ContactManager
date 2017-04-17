@@ -6,7 +6,7 @@ using ContactManager.Model;
 
 namespace ContactManager.ViewModels
 {
-    public class NieuwViewModel
+    public class NieuwViewModel : BasisViewModel
     {
         public Persoon Persoon { get; set; }
         public Organisatie Organisatie { get; set; }

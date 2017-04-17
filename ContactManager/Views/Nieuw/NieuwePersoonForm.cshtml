@@ -2,21 +2,19 @@
 @using ContactManager.ViewModels
 @using ContactManager.Controllers
 @using ContactManager.Model
+
 @model NieuwViewModel
 
+@{
+    Layout = "_Layout";
+}
+
+@section pageSpecificScripts {
+<script type="text/javascript" src="~/js/NieuwContactJavascripts.js"></script>
+}
 
 
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Nieuwe @Model.Persoon.GetType().Name</title>
-    <script type="text/javascript" src="~/js/NieuwContactJavascripts.js"></script>
-
-</head>
-<body>
-<h1>Nieuwe @Model.Persoon.GetType().Name</h1>
-@using (Html.BeginForm("NieuwePersoon", "Nieuw", FormMethod.Post))
+@using (Html.BeginForm("NieuwePersoon", "Nieuw", FormMethod.Get))
 {
     <p>
         @*<input type="hidden" name="contactSoort" value="@Model.Persoon.GetType()" />*@
@@ -40,8 +38,17 @@
 
 
         <button onclick="nieuweTelefoon()" type="button">Nieuwe Telefoon</button>
-
         <div id="telefoonVelden"><span id="spanToInsertAfter"></span></div>
+
+        @Html.LabelFor(m => m.Persoon.GeboorteDatum)
+        <input class="date" name="GeboorteDatum"/>
+        
+        <br />
+
+        @Html.LabelFor(m => m.Persoon.Mugshot)
+        @Html.EditorFor(m => m.Persoon.Mugshot)
+        <br />      
+
 
 
         <input type="submit" value="Bewaar" />
@@ -49,5 +56,10 @@
 
 }
 
-</body>
-</html>
+<script>
+    $(document).ready(function() {
+        // create DatePicker from input HTML element
+        $(".datumKiezer").DatePicker();
+
+    });
+</script>

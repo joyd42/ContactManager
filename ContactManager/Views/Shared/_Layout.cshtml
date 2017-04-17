@@ -1,0 +1,29 @@
+﻿@using ContactManager.ViewModels
+@model BasisViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Contact Manager : @Model.Titel</title>
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/lib/kendo-ui/styles/kendo.common.core.min.css" />
+    <script src="lib/kendo-ui/js/kendo.calendar.min.js"></script>
+
+    
+    @RenderSection("pageSpecificScripts", required: false)
+</head>
+<body>
+<h1>Contact Manager</h1>
+<h2>@Model.Titel</h2>
+
+<main>
+    @RenderBody()
+</main>
+    
+
+</body>
+</html>

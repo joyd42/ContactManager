@@ -35,7 +35,8 @@ namespace ContactManager.Controllers
         {
             var model = new NieuwViewModel
             {
-                Persoon = new Persoon()
+                Persoon = new Persoon(),
+                Titel = "Nieuwe Persoon"
 
             };
             return View(model);
@@ -51,7 +52,8 @@ namespace ContactManager.Controllers
         {
             var model = new NieuwViewModel
             {
-                Organisatie = new Organisatie()
+                Organisatie = new Organisatie(),
+                Titel = "Nieuwe Organisatie"
             };
             return View(model);
         }

@@ -33,7 +33,8 @@ namespace ContactManager.Controllers
                     : _toonContactRepository.ContactenMetNaam(filter),
                 Filter = filter,
                 ActiefContactId = actiefContactId,
-                ActiefContact = GeefActiefContact(actiefContactId, actiefContactSoort)
+                ActiefContact = GeefActiefContact(actiefContactId, actiefContactSoort),
+                Titel = "Vind contact"
             };
 
 

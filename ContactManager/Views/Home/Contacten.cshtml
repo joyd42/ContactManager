@@ -4,14 +4,11 @@
 @using ContactManager.Model
 @model ContactenViewModel
 
+@{
+    Layout = "_Layout";
+}
 
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Contact Manager Index</title>
-</head>
-<body>
 
 @using (Html.BeginForm("Contacten", "Home", FormMethod.Get))
 {
@@ -95,7 +92,3 @@
         }
     }
 </div>
-
-
-</body>
-</html>
