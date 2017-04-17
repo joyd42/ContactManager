@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ContactManager.Model;
 
 namespace ContactManager.Service.Interfaces
@@ -7,8 +8,10 @@ namespace ContactManager.Service.Interfaces
     {
         IEnumerable<Contact> AlleContacten();
         IEnumerable<Contact> ContactenMetNaam(string naam);
+        IEnumerable<Persoon> PersonenMetNaam(string naam);
         Organisatie OrganisatieMetId(int id);
         Persoon PersoonMetId(int id);
+        IQueryable<Persoon> QueryPersonen();
     }
 
 }

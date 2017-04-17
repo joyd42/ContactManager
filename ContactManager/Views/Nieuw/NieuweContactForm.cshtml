@@ -1,0 +1,126 @@
+﻿@using System.Runtime.InteropServices.ComTypes
+@using System.Text
+@using ContactManager.ViewModels
+@using ContactManager.Controllers
+@using ContactManager.Model
+@using ContactManager.Service.HelperClasses
+@using NonFactors.Mvc.Lookup
+
+@model NieuwViewModel
+
+@{
+    Layout = "_Layout";
+}
+
+
+
+@section pageSpecificScripts {
+    <script type="text/javascript" src="~/js/NieuwContactJavascripts.js"></script>
+    
+    <link href="~/lib/MvcLookup/mvc-lookup.css" rel="stylesheet">
+    <script src="~/lib/MvcLookup/mvc-lookup.js"></script>
+}
+@{
+    var formNaam = "Nieuwe" + Model.ContactSoort;
+}
+
+
+@using (Html.BeginForm(formNaam, "Nieuw", FormMethod.Get))
+{
+    <p>
+
+
+        @{
+            var nameVeldVoorNaam = Model.ContactSoort + ".Naam";
+        }
+
+        <label>Naam</label>
+        <input type="text" name="@nameVeldVoorNaam"/>
+        <br/>
+
+        @{
+            var nameVeldVoorStraat = Model.ContactSoort + ".Adres.Straat";
+        }
+
+
+        <label>Straat</label>
+        <input type="text" name="@nameVeldVoorStraat"/>
+        <br/>
+
+        @{
+            var nameVeldVoorGemeente = Model.ContactSoort + ".Adres.Locatie";
+        }
+
+        <label>Gemeente</label>
+        <input type="text" name="@nameVeldVoorGemeente"/>
+        <br/>
+
+        @{
+            var nameVeldVoorLand = Model.ContactSoort + ".Adres.Land";
+        }
+
+        <label>Land</label>
+        <input type="text" name="@nameVeldVoorLand"/>
+        <br/>
+
+
+        <button onclick="nieuweTelefoon()" type="button">Nieuwe Telefoon</button>
+        <div id="telefoonVelden">
+            <span id="spanToInsertAfter"></span>
+        </div>
+
+        @if (Model.ContactSoort == ContactSoort.Persoon)
+        {
+            var nameVeldVoorGeboorteDatum = Model.ContactSoort + ".GeboorteDatum";
+            <label>Geboorte Datum</label>
+            <input type="date" class="datumKiezer" name="@nameVeldVoorGeboorteDatum"/>
+            <br/>
+
+            var nameVeldVoorFoto = Model.ContactSoort + ".Mugshot";
+            <label>Foto</label>
+            <input type="text" name="@nameVeldVoorFoto"/>
+            <br/>
+        }
+        else
+        {
+            <label>Contactpersoon</label>
+            <text>Zoek een contactpersoon om toe te voegen</text>
+            <input type="text" id="zoekveld" />
+            <div id="contactLijst"></div>
+
+        }
+
+
+        <input type="submit" value="Bewaar"/>
+    </p>
+}
+
+<script>
+    "use strict";
+
+    $(document).ready(function() {
+        // create DatePicker from input HTML element
+        $(".datumKiezer").datepicker();
+
+        const toonContactPersonen = function () {
+            var zoekString = $('#zoekveld').val();
+            var contactLijstDiv = $('<div id="contactLijst"></div>');
+
+            $.get("/Nieuw/Personen?naam=" + zoekString, function (data, status) {
+                var personen = data;
+                console.log(personen.length + "resultaten gevonden");
+
+                for (var i = 0; i < personen.length; i++) {
+                    var tableRow = $('<p><input type="radio" name="contactPersoonId" value="' + personen[i].id + '"> ' + personen[i].naam + '</p>');
+                    contactLijstDiv.append(tableRow);
+                }
+            });
+            $('#contactLijst').replaceWith(contactLijstDiv);
+        };
+
+        $("#zoekveld").keydown(toonContactPersonen);
+
+
+
+    });
+</script>

@@ -8,7 +8,9 @@ namespace ContactManager.ViewModels
 {
     public class NieuwViewModel : BasisViewModel
     {
-        public Persoon Persoon { get; set; }
-        public Organisatie Organisatie { get; set; }
+        public Persoon Persoon { get; set; } = new Persoon();
+        public Organisatie Organisatie { get; set; } = new Organisatie();
+
+        public ContactSoort ContactSoort { get; set; } 
     }
 }

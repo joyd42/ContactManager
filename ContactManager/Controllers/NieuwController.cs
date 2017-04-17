@@ -4,6 +4,9 @@ using ContactManager.Service.Interfaces;
 using ContactManager.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using ContactManager.Service.HelperClasses;
+using Newtonsoft.Json;
+using NonFactors.Mvc.Lookup;
 
 namespace ContactManager.Controllers
 
@@ -22,44 +25,55 @@ namespace ContactManager.Controllers
 
         public IActionResult NieuwePersoon(Persoon persoon, string[] telefoonNaam, string[] telefoonNummer)
         {
-            for (int i = 0; i < telefoonNaam.Length; i++)
+            for (var i = 0; i < telefoonNaam.Length; i++)
             {
                 persoon.VoegTelefoonToe(telefoonNaam[i], telefoonNummer[i]);
             }
 
-            //persoon.GeboorteDatum = DateTime.Parse(geboorteDatum);
 
 
             _nieuwContactRepository.VoegPersoonToeEnBewaar(persoon);
-            return RedirectToAction("LaatstToegevoegdContactMetNaam", "Home", new { naam = persoon.Naam, actiefContactSoort = "Persoon" });
+            return RedirectToAction("LaatstToegevoegdContactMetNaam", "Home", new { naam = persoon.Naam, actiefContactSoort = ContactSoort.Persoon.ToString()});
         }
 
-        public IActionResult NieuwePersoonForm()
+        public IActionResult NieuweOrganisatie(Organisatie organisatie, string[] telefoonNaam, string[] telefoonNummer, int? contactPersoonId)
         {
-            var model = new NieuwViewModel
+            for (var i = 0; i < telefoonNaam.Length; i++)
             {
-                Persoon = new Persoon(),
-                Titel = "Nieuwe Persoon"
-
-            };
-            return View(model);
-        }
-
-        public IActionResult NieuweOrganisatie(Organisatie organisatie)
-        {
+                organisatie.VoegTelefoonToe(telefoonNaam[i], telefoonNummer[i]);
+            }
+            if (contactPersoonId != null)
+            {
+                organisatie.ContactPersoon = _nieuwContactRepository.PersoonMetId((int)contactPersoonId);
+            }
             _nieuwContactRepository.VoegOrganisatieToeEnBewaar(organisatie);
-            return RedirectToAction("Contacten", "Home");
+            return RedirectToAction("LaatstToegevoegdContactMetNaam", "Home", new { naam = organisatie.Naam, actiefContactSoort = ContactSoort.Organisatie.ToString() });
         }
 
-        public IActionResult NieuweOrganisatieForm()
+        public IActionResult NieuweContactForm(ContactSoort contactSoort)
         {
             var model = new NieuwViewModel
             {
-                Organisatie = new Organisatie(),
-                Titel = "Nieuwe Organisatie"
+                Titel = "Nieuwe " + contactSoort.ToString(),
+                ContactSoort = contactSoort
+
             };
             return View(model);
         }
 
+
+        public JsonResult People(LookupFilter filter)
+        {
+            var peopleLookup = new PeopleLookup(_nieuwContactRepository) { Filter = filter};
+            var peopleLookupData = peopleLookup.GetData();
+            var peopleLookupDataInJson = Json(peopleLookupData);
+            return Json(new PeopleLookup(_nieuwContactRepository) { Filter = filter }.GetData());
+        }
+
+        public JsonResult Personen(string naam)
+        {
+            var personen = _nieuwContactRepository.PersonenMetNaam(naam);
+            return Json(personen);
+        }
     }
 }

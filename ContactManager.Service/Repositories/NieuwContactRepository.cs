@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using ContactManager.Data;
 using ContactManager.Model;
@@ -7,10 +8,11 @@ using ContactManager.Service.Interfaces;
 
 namespace ContactManager.Service.Repositories
 {
-    public class NieuwContactRepository : INieuwContactRepository
+    public class NieuwContactRepository : ToonContactRepository, INieuwContactRepository, IToonContactRepository
     {
         protected NieuwContactRepository() { }
-        protected Context Context { get; set; }
+
+
 
         public NieuwContactRepository(Context context)
         {
@@ -46,6 +48,11 @@ namespace ContactManager.Service.Repositories
         private void VoegToe<T>(T entity) where T : class
         {
             Context.Set<T>().Add(entity);
+        }
+
+        private IQueryable<T> Query<T>() where T : class
+        {
+            return Context.Set<T>();
         }
 
     }

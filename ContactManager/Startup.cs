@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ContactManager.Data;
+using ContactManager.Service.HelperClasses;
 using ContactManager.Service.Interfaces;
 using ContactManager.Service.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace ContactManager
 {
@@ -32,10 +34,11 @@ namespace ContactManager
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddSingleton(Configuration);
             services.AddScoped<IToonContactRepository, ToonContactRepository>();
             services.AddScoped<INieuwContactRepository, NieuwContactRepository>();
+            
             services.AddDbContext<Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ContactenCore")));
         }

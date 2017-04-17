@@ -28,10 +28,17 @@ namespace ContactManager.Service.Repositories
         {
             return QueryContacten()
                     .Where(c => c.Naam.Contains(naam))
-                    .Take(100)
+                    .Take(10)
                     .ToList();
         }
 
+        public IEnumerable<Persoon> PersonenMetNaam(string naam)
+        {
+            return QueryPersonen()
+                .Where(p => p.Naam.Contains(naam))
+                .Take(10)
+                .ToList();
+        }
 
 
         public Organisatie OrganisatieMetId(int id)
@@ -49,6 +56,10 @@ namespace ContactManager.Service.Repositories
                 .FirstOrDefault(p => p.Id.Equals(id));
         }
 
+        public IQueryable<Persoon> QueryPersonen()
+        {
+            return Query<Persoon>();
+        }
 
         private IQueryable<Contact> QueryContacten()
         {
