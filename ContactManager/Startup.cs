@@ -37,6 +37,7 @@ namespace ContactManager
             services.AddSingleton(Configuration);
             services.AddScoped<IToonContactRepository, ToonContactRepository>();
             services.AddScoped<INieuwContactRepository, NieuwContactRepository>();
+            services.AddScoped<IWijzigContactRepository, WijzigContactRepository>();
             
             services.AddDbContext<Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ContactenCore")));
@@ -47,7 +48,8 @@ namespace ContactManager
             IApplicationBuilder app, 
             IHostingEnvironment env, 
             ILoggerFactory loggerFactory,
-            INieuwContactRepository contactRepository)
+            INieuwContactRepository contactRepository
+            )
         {
             loggerFactory.AddConsole();
 
