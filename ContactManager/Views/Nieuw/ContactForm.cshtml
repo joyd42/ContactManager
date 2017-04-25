@@ -1,0 +1,168 @@
+﻿@using ContactManager.ViewModels
+@using ContactManager.Model
+
+@model NieuwViewModel
+
+@{
+    Layout = "_Layout";
+}
+
+
+
+@section pageSpecificScripts {
+    <script type="text/javascript" src="~/js/NieuwContactJavascripts.js"></script>
+
+}
+@{
+    var formNaam = "Nieuwe" + Model.ContactSoort;
+
+    Contact huidigContact;
+
+    if (Model.Persoon == null && Model.Organisatie != null)
+    {
+        huidigContact = Model.Organisatie;
+    }
+    else if (Model.Persoon != null && Model.Organisatie == null)
+    {
+        huidigContact = Model.Persoon;
+    }
+    else
+    {
+        if (Model.ContactSoort == ContactSoort.Organisatie)
+        {
+            huidigContact = new Organisatie();
+        }
+        else
+        {
+            huidigContact = new Persoon();
+        }
+    }
+
+
+}
+
+
+@using (Html.BeginForm(formNaam, "Nieuw", FormMethod.Get))
+{
+    <p>
+
+
+        @{
+            var nameVeldVoorNaam = Model.ContactSoort + ".Naam";
+        }
+
+        <label>Naam</label>
+        <input type="text" name="@nameVeldVoorNaam" value="@huidigContact.Naam" />
+        <br />
+
+        @{
+            var nameVeldVoorStraat = Model.ContactSoort + ".Adres.Straat";
+        }
+
+
+        <label>Straat</label>
+        <input type="text" name="@nameVeldVoorStraat" value="@huidigContact.Adres.Straat" />
+        <br />
+
+        @{
+            var nameVeldVoorGemeente = Model.ContactSoort + ".Adres.Locatie";
+        }
+
+        <label>Gemeente</label>
+        <input type="text" name="@nameVeldVoorGemeente" value="@huidigContact.Adres.Locatie" />
+        <br />
+
+        @{
+            var nameVeldVoorLand = Model.ContactSoort + ".Adres.Land";
+        }
+
+        <label>Land</label>
+        <input type="text" name="@nameVeldVoorLand" value="@huidigContact.Adres.Land" />
+        <br />
+
+        <label>Telefoons</label>
+
+        <div id="telefoonVelden">
+            <span id="spanToInsertAfter"></span>
+            @foreach (var telefoon in huidigContact.Telefoons)
+            {
+                <p>
+                 Naam:
+                 <input name="telefoonsNamen" type="text" value="@telefoon.Naam"/>
+                 Nummer:
+                 <input name="telefoonNummers" type="text" value="@telefoon.Nummer"/>
+             </p>
+            }
+
+
+        </div>
+        <button onclick="nieuweTelefoon()" type="button">Nieuwe Telefoon</button><br/>
+
+
+
+
+            @if (Model.ContactSoort == ContactSoort.Persoon)
+            {
+                var nameVeldVoorGeboorteDatum = Model.ContactSoort + ".GeboorteDatum";
+                <label>Geboorte Datum</label>
+                <input type="date" class="datumKiezer" name="@nameVeldVoorGeboorteDatum" value="@Model.Persoon.GeboorteDatum"/>
+                <br />
+
+                var nameVeldVoorFoto = Model.ContactSoort + ".Mugshot";
+                <label>Foto</label>
+                <input type="text" name="@nameVeldVoorFoto" value="@Model.Persoon.Mugshot"/>
+                <br />
+            }
+
+
+
+            else
+            {
+                <label>Contactpersoon</label><br/>
+                <text>Zoek een contactpersoon om toe te voegen</text><br/>
+                <input type="text" id="zoekveld" />
+                <div id="contactLijst">
+                    @if (Model.Organisatie != null)
+                    {
+                        <p>
+                            <input name="contactPersoonId" value="@Model.Organisatie.ContactPersoon.Id" type="radio"/>@Model.Organisatie.ContactPersoon.Naam
+                        </p>
+                    }
+                </div>
+
+            }
+
+
+            <input type="submit" value="Bewaar" />
+            </p>
+            }
+
+<script>
+    "use strict";
+
+    $(document).ready(function () {
+        // create DatePicker from input HTML element
+        $(".datumKiezer").datepicker();
+
+        const toonContactPersonen = function () {
+            var zoekString = $('#zoekveld').val();
+            var contactLijstDiv = $('<div id="contactLijst"></div>');
+
+            $.get("/Nieuw/Personen?naam=" + zoekString, function (data, status) {
+                var personen = data;
+                console.log(personen.length + "resultaten gevonden");
+
+                for (var i = 0; i < personen.length; i++) {
+                    var tableRow = $('<p><input type="radio" name="contactPersoonId" value="' + personen[i].id + '"> ' + personen[i].naam + '</p>');
+                    contactLijstDiv.append(tableRow);
+                }
+            });
+            $('#contactLijst').replaceWith(contactLijstDiv);
+        };
+
+        $("#zoekveld").keydown(toonContactPersonen);
+
+
+
+    });
+</script>

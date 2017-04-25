@@ -8,6 +8,11 @@ namespace ContactManager.Model
 
         public string Mugshot { get; set; }
 
+        public override ContactSoort GeefContactSoort()
+        {
+            return ContactSoort.Persoon;
+        }
+
         public override string ToString()
         {
             return $"{base.ToString()}, {nameof(GeboorteDatum)}: {GeboorteDatum}";

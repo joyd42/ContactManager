@@ -24,7 +24,7 @@ namespace ContactManager.Controllers
             return RedirectToAction(nameof(Contacten));
         }
 
-        public IActionResult Contacten(string filter, int actiefContactId, string actiefContactSoort)
+        public IActionResult Contacten(string filter, int actiefContactId, ContactSoort actiefContactSoort)
         {
             var model = new ContactenViewModel
             {
@@ -49,12 +49,12 @@ namespace ContactManager.Controllers
             return RedirectToAction(nameof(Contacten), new { actiefContactId = id, actiefContactSoort = actiefContactSoort });
         }
 
-        private Contact GeefActiefContact(int actiefContactId, string actiefContactSoort)
+        private Contact GeefActiefContact(int actiefContactId, ContactSoort? actiefContactSoort)
         {
             Contact actiefContact = null;
-            if (string.IsNullOrEmpty(actiefContactSoort))
+            if (actiefContactSoort == null)
             {
-                actiefContact = new Contact
+                actiefContact = new Persoon()
                 {
                     Naam = "",
                     Id = 0,
@@ -62,11 +62,11 @@ namespace ContactManager.Controllers
                 };
             }
 
-            else if (actiefContactSoort == nameof(Organisatie))
+            else if (actiefContactSoort == ContactSoort.Organisatie)
             {
                 actiefContact = _toonContactRepository.OrganisatieMetId(actiefContactId);
             }
-            else if (actiefContactSoort == nameof(Persoon))
+            else if (actiefContactSoort == ContactSoort.Persoon)
             {
                 actiefContact = _toonContactRepository.PersoonMetId(actiefContactId);
             }

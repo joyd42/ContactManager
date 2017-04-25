@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ContactManager.Model
 {
-    public class Contact
+    public abstract class Contact
     {
 
         public int Id { get; set; }
@@ -21,10 +21,20 @@ namespace ContactManager.Model
             Telefoons.Add(new Telefoon(naam, nummer));
         }
 
+        public void VoegTelefoonsToe(string[] telefoonsNamen, string[] telefoonNummers)
+        {
+            for (var i = 0; i < telefoonsNamen.Length; i++)
+            {
+                VoegTelefoonToe(telefoonsNamen[i], telefoonNummers[i]);
+            }
+        }
+
         public void VerwijderTelefoon(Telefoon telefoon)
         {
             Telefoons.Remove(telefoon);
         }
+
+        public abstract ContactSoort GeefContactSoort();
 
         public override string ToString()
         {

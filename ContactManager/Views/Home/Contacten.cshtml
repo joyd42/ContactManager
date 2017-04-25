@@ -10,7 +10,7 @@
 
 
 
-@using (Html.BeginForm("Contacten", "Home", FormMethod.Get))
+@using (Html.BeginForm(nameof(HomeController.Contacten), "Home", FormMethod.Get))
 {
     <p>
         Naam: @Html.TextBox("filter")
@@ -20,14 +20,14 @@
     </p>
 }
 
-@using (Html.BeginForm("NieuweContactForm", "Nieuw", FormMethod.Get))
+@using (Html.BeginForm(nameof(NieuwController.ContactForm), "Nieuw", FormMethod.Get))
 {
-    <button type="button" onclick="location.href = '@Url.Action("NieuweContactForm", "Nieuw", new {contactSoort = ContactSoort.Persoon})'">Maak @ContactSoort.Persoon.ToString()</button>
+    <button type="button" onclick="location.href = '@Url.Action(nameof(NieuwController.ContactForm), "Nieuw", new {contactSoort = ContactSoort.Persoon, bestaalAl = false})'">Maak @ContactSoort.Persoon.ToString()</button>
 }
 
-@using (Html.BeginForm("NieuweContactForm", "Nieuw", FormMethod.Get))
+@using (Html.BeginForm(nameof(NieuwController.ContactForm), "Nieuw", FormMethod.Get))
 {
-    <button type="button" onclick="location.href = '@Url.Action("NieuweContactForm", "Nieuw", new {contactSoort = ContactSoort.Organisatie})'">Maak @ContactSoort.Organisatie.ToString()</button>
+    <button type="button" onclick="location.href = '@Url.Action(nameof(NieuwController.ContactForm), "Nieuw", new {contactSoort = ContactSoort.Organisatie, bestaalAl = false })'">Maak @ContactSoort.Organisatie.ToString()</button>
 }
 
 <table style="height: 80%">
@@ -43,7 +43,7 @@
     {
         <tr>
             <td>@contact.GetType().Name</td>
-            <td>@Html.ActionLink(contact.Naam, "Contacten", new {Model.Filter, actiefContactId = contact.Id, actiefContactSoort = contact.GetType().Name})</td>
+            <td>@Html.ActionLink(contact.Naam, "Contacten", new {Model.Filter, actiefContactId = contact.Id, actiefContactSoort = contact.GeefContactSoort()})</td>
             <td>@contact.Adres.Straat</td>
             <td>@contact.Adres.Locatie</td>
             <td>@contact.Adres.Land</td>
@@ -51,44 +51,67 @@
     }
 </table>
 
-<div style="position: absolute; top: 10px; right: 10px">
-    Naam: @Model.ActiefContact.Naam<br/>
-    Straat: @Model.ActiefContact.Adres.Straat<br/>
-    Gemeente: @Model.ActiefContact.Adres.Locatie<br/>
-    Telefoon nummers: <br/>
+@if (Model.ActiefContactId != 0)
+{
+    <div style="position: absolute; top: 10px; right: 10px">
+        Naam: @Model.ActiefContact.Naam<br/>
+        Straat: @Model.ActiefContact.Adres.Straat<br/>
+        Gemeente: @Model.ActiefContact.Adres.Locatie<br/>
+        Telefoon nummers: <br/>
 
-    @foreach (var telefoon in Model.ActiefContact.Telefoons)
-    {
-        @telefoon.Naam
-        <text>: </text>
-        @telefoon.Nummer
-        <br/>
-    }
-
-    @if (Model.ActiefContact.GetType().Name == "Persoon")
-    {
-        <text>Geboortedatum:</text>
-        var persoon = (Persoon) Model.ActiefContact;
-        if (persoon.GeboorteDatum != null)
+        @foreach (var telefoon in Model.ActiefContact.Telefoons)
         {
-            @persoon.GeboorteDatum.Value.ToString("dd-MM-yyyy")
+            @telefoon.Naam
+            <text>: </text>
+            @telefoon.Nummer
+            <br/>
         }
-        ;
-        <br/>
-        <text>Foto:</text>
-        <img src="@persoon.Mugshot"/>
-    }
-    else
-    {
-        <text>Contactpersoon:</text>
-        var organisatieAlsContact = Model.ActiefContact;
-        if (organisatieAlsContact != null && organisatieAlsContact.Id != 0)
+
+        @if (Model.ActiefContact.GetType().Name == "Persoon")
         {
-            var organisatie = (Organisatie) organisatieAlsContact;
-            if (organisatie.ContactPersoon != null)
+            <text>Geboortedatum:</text>
+            var persoon = (Persoon) Model.ActiefContact;
+            if (persoon.GeboorteDatum != null)
             {
-                @Html.ActionLink(organisatie.ContactPersoon.Naam, "Contacten", new {Model.Filter, actiefContactId = organisatie.ContactPersoon.Id, actiefContactSoort = organisatie.ContactPersoon.GetType().Name})
+                @persoon.GeboorteDatum.Value.ToString("dd-MM-yyyy")
+            }
+            ;
+            <br/>
+            <text>Foto:</text>
+            <img src="@persoon.Mugshot"/>
+        }
+        else
+        {
+            <text>Contactpersoon:</text>
+            var organisatieAlsContact = Model.ActiefContact;
+            if (organisatieAlsContact != null && organisatieAlsContact.Id != 0)
+            {
+                var organisatie = (Organisatie) organisatieAlsContact;
+                if (organisatie.ContactPersoon != null)
+                {
+                    @Html.ActionLink(organisatie.ContactPersoon.Naam, "Contacten", new {Model.Filter, actiefContactId = organisatie.ContactPersoon.Id, actiefContactSoort = organisatie.ContactPersoon.GeefContactSoort()})
+                }
             }
         }
-    }
-</div>
+    
+        @using (Html.BeginForm(nameof(NieuwController.ContactForm), "Nieuw", FormMethod.Get))
+        {
+            Persoon InputPersoon = null;
+            Organisatie InputOrganisatie = null;
+            if (Model.ActiefContact.GetType() == typeof(Persoon))
+            {
+                InputPersoon = (Persoon)Model.ActiefContact;
+            }
+            else if (Model.ActiefContact.GetType() == typeof(Organisatie))
+            {
+                InputOrganisatie = (Organisatie) Model.ActiefContact;
+            }
+
+
+            <button type="button" onclick="location.href = '@Url.Action(nameof(NieuwController.ContactForm), "Nieuw", new {contactSoort = Model.ActiefContact.GeefContactSoort(), contactId = Model.ActiefContactId, bestaalAl = false})'">Wijzig info</button>
+        }
+    
+
+    </div> 
+}
+

@@ -4,8 +4,8 @@ var telefoonButtonCounter = 0;
 
 
 function nieuweTelefoon() {
-    var nieuweTelefoonNaamVeldString = "<input type=\"text\" name=\"telefoonNaam\" />";
-    var nieuweTelefoonNummerVeldString = "<input type=\"text\" name=\"telefoonNummer\" />";
+    var nieuweTelefoonNaamVeldString = "<input type=\"text\" name=\"telefoonsNamen\" />";
+    var nieuweTelefoonNummerVeldString = "<input type=\"text\" name=\"telefoonNummers\" />";
 
     var nieuweTelefoonVelden = document.createElement("p");
     nieuweTelefoonVelden.innerHTML = "Naam: " + nieuweTelefoonNaamVeldString + "Nummer: " + nieuweTelefoonNummerVeldString;
