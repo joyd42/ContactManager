@@ -14,11 +14,13 @@ namespace ContactManager.Controllers
     {
         private readonly INieuwContactRepository _nieuwContactRepository;
         private readonly IWijzigContactRepository _wijzigContactRepository;
+        private readonly IVerwijderContractRepository _verwijderContractRepository;
 
-        public NieuwController(INieuwContactRepository nieuwContactRepository, IWijzigContactRepository wijzigContactRepository)
+        public NieuwController(INieuwContactRepository nieuwContactRepository, IWijzigContactRepository wijzigContactRepository, IVerwijderContractRepository verwijderContractRepository)
         {
             _nieuwContactRepository = nieuwContactRepository;
             _wijzigContactRepository = wijzigContactRepository;
+            _verwijderContractRepository = verwijderContractRepository;
         }
 
 
@@ -87,6 +89,26 @@ namespace ContactManager.Controllers
             return View(model);
         }
 
+        public IActionResult VerwijderContact(ContactSoort contactSoort, int contactId)
+        {
+            if (contactSoort == ContactSoort.Organisatie)
+            {
+                _verwijderContractRepository.VerwijderOrganisatieEnBewaar(contactId);
+            }
+            else
+            {
+                if (_verwijderContractRepository.PersoonIsContactPersoonVoorOrganisatie(contactId))
+                {
+                    return Content("Persoon kan niet verwijderd worden omdat hij een contactpersoon is voor een organisatie");
+                }
+                else
+                {
+                    _verwijderContractRepository.VerwijderPersoonEnBewaar(contactId);
+                   
+                }
+            }
+            return RedirectToAction(nameof(HomeController.Contacten), "Home");
+        }
 
         public JsonResult Personen(string naam)
         {

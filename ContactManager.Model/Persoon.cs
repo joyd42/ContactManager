@@ -15,6 +15,12 @@ namespace ContactManager.Model
         {
             return ContactSoort.Persoon;
         }
+        public Organisatie Organisatie { get; set; }
+
+        public bool IsContactPersoonVoorOrganisatie()
+        {
+            return Organisatie != null;
+        }
 
         public override string ToString()
         {

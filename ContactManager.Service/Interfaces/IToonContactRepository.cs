@@ -12,6 +12,7 @@ namespace ContactManager.Service.Interfaces
         Organisatie OrganisatieMetId(int id);
         Persoon PersoonMetId(int id);
         IQueryable<Persoon> QueryPersonen();
+        IQueryable<Organisatie> QueryOrganisaties();
     }
 
 }

@@ -67,7 +67,7 @@
             <br/>
         }
 
-        @if (Model.ActiefContact.GetType().Name == "Persoon")
+        @if (Model.ActiefContact.GetType() == typeof(Persoon))
         {
             <text>Geboortedatum:</text>
             var persoon = (Persoon) Model.ActiefContact;
@@ -110,7 +110,32 @@
 
             <button type="button" onclick="location.href = '@Url.Action(nameof(NieuwController.ContactForm), "Nieuw", new {contactSoort = Model.ActiefContact.GeefContactSoort(), contactId = Model.ActiefContactId, bestaalAl = true})'">Wijzig info</button>
         }
-    
+        @using (Html.BeginForm(nameof(NieuwController.VerwijderContact), "Nieuw", FormMethod.Get))
+        {
+            bool buttonEnabled;
+
+            if (Model.ActiefContact.GetType() == typeof(Persoon))
+            {
+                var persoon = (Persoon) Model.ActiefContact;
+                buttonEnabled = !persoon.IsContactPersoonVoorOrganisatie();
+            }
+            else
+            {
+                buttonEnabled = true;
+            }
+
+
+            <button type="button" onclick="location.href = '@Url.Action(nameof(NieuwController.VerwijderContact), "Nieuw", new {ContactSoort = Model.ActiefContact.GeefContactSoort(), contactId = Model.ActiefContactId})'" 
+                    @{
+                        if (!buttonEnabled)
+                        {
+                            @:disabled="disabled"
+                        }
+                    }
+            
+                    >Verwijder @Model.ActiefContact.GeefContactSoort()</button>
+        }
+
 
     </div> 
 }

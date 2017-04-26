@@ -61,6 +61,11 @@ namespace ContactManager.Service.Repositories
             return Query<Persoon>();
         }
 
+        public IQueryable<Organisatie> QueryOrganisaties()
+        {
+            return Query<Organisatie>();
+        }
+
         private IQueryable<Contact> QueryContacten()
         {
             
