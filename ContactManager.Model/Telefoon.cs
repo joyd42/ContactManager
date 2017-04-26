@@ -13,6 +13,13 @@ namespace ContactManager.Model
             Nummer = nummer;
         }
 
+        protected internal Telefoon(string naam, string nummer, int id)
+        {
+            Naam = naam;
+            Nummer = nummer;
+            Id = id;
+        }
+
         public int Id { get; set; }
         public string Naam { get; set; }
         public string Nummer { get; set; }

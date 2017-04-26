@@ -51,6 +51,12 @@ namespace ContactManager.Data
                 .ToTable("Telefoon");
             modelBuilder.Entity<Telefoon>()
                 .HasKey(t => t.Id);
+
+            //modelBuilder.Entity<Telefoon>()
+            //    .HasOne(t => t.Contact)
+            //    .WithMany(c => c.Telefoons)
+            //    .HasForeignKey(t => t.ContactId);
+
             modelBuilder.Entity<Telefoon>()
                 .Property(t => t.Naam);
             modelBuilder.Entity<Telefoon>()
@@ -72,8 +78,10 @@ namespace ContactManager.Data
                 .WithOne(a => a.Contact)
                 .HasForeignKey<Adres>(a => a.Id);
 
-            modelBuilder.Entity<Contact>()
-                .HasMany(c => c.Telefoons);
+            //modelBuilder.Entity<Contact>()
+            //    .HasMany(c => c.Telefoons)
+            //    .WithOne()
+            //    .HasForeignKey(t => t.ContactId);
         }
 
         private static void DoeAdresMappings(ModelBuilder modelBuilder)

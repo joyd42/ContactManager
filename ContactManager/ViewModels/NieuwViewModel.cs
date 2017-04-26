@@ -11,6 +11,8 @@ namespace ContactManager.ViewModels
         public Persoon Persoon { get; set; }
         public Organisatie Organisatie { get; set; } 
 
+        public bool BestaatAl { get; set; }
+
 
         public ContactSoort ContactSoort { get; set; } 
     }

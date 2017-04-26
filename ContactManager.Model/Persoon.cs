@@ -4,6 +4,9 @@ namespace ContactManager.Model
 {
     public class Persoon : Contact
     {
+        public Persoon(){
+        }
+
         public DateTime? GeboorteDatum { get; set; }
 
         public string Mugshot { get; set; }

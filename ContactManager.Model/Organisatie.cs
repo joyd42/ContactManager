@@ -6,6 +6,10 @@ namespace ContactManager.Model
 {
     public class Organisatie : Contact
     {
+        public Organisatie()
+        {
+        }
+
         public Persoon ContactPersoon { get; set; }
         public override ContactSoort GeefContactSoort()
         {

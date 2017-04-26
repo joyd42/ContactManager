@@ -5,6 +5,7 @@ namespace ContactManager.Model
 {
     public abstract class Contact
     {
+        protected Contact() { }
 
         public int Id { get; set; }
 
@@ -14,11 +15,15 @@ namespace ContactManager.Model
         
 
 
-        public ICollection<Telefoon> Telefoons { get;  set; } = new List<Telefoon>();
+        public IList<Telefoon> Telefoons { get;  set; } = new List<Telefoon>();
 
         public void VoegTelefoonToe(string naam, string nummer)
         {
             Telefoons.Add(new Telefoon(naam, nummer));
+        }
+        public void VoegTelefoonToe(string naam, string nummer, int id)
+        {
+            Telefoons.Add(new Telefoon(naam, nummer, id));
         }
 
         public void VoegTelefoonsToe(string[] telefoonsNamen, string[] telefoonNummers)
@@ -26,6 +31,13 @@ namespace ContactManager.Model
             for (var i = 0; i < telefoonsNamen.Length; i++)
             {
                 VoegTelefoonToe(telefoonsNamen[i], telefoonNummers[i]);
+            }
+        }
+        public void VoegTelefoonsToe(string[] telefoonsNamen, string[] telefoonNummers, int[] iDs)
+        {
+            for (var i = 0; i < telefoonsNamen.Length; i++)
+            {
+                VoegTelefoonToe(telefoonsNamen[i], telefoonNummers[i], iDs[i]);
             }
         }
 

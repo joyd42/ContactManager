@@ -31,10 +31,27 @@ namespace ContactManager.Controllers
             return RedirectToAction(nameof(HomeController.LaatstToegevoegdContactMetNaam), "Home", new { naam = persoon.Naam, actiefContactSoort = ContactSoort.Persoon.ToString() });
         }
 
-        public IActionResult UpdatePersoon(Persoon persoon, string[] telefoonsNamen, string[] telefoonNummers)
+        public IActionResult UpdatePersoon(Persoon persoon, string[] telefoonsNamen, string[] telefoonNummers, int[] iDs)
         {
-            var test = persoon;
-            throw new NotImplementedException();
+            persoon.Telefoons.Clear();
+            persoon.VoegTelefoonsToe(telefoonsNamen, telefoonNummers);
+
+            _wijzigContactRepository.UpdatePersoonEnBewaar(persoon);
+            return RedirectToAction(nameof(HomeController.LaatstToegevoegdContactMetNaam), "Home", new { naam = persoon.Naam, actiefContactSoort = ContactSoort.Persoon.ToString() });
+        }
+
+        public IActionResult UpdateOrganisatie(Organisatie organisatie, string[] telefoonsNamen, string[] telefoonNummers, int[] iDs, int contactPersoonId)
+        {
+            organisatie.Telefoons.Clear();
+            organisatie.VoegTelefoonsToe(telefoonsNamen, telefoonNummers);
+            if (contactPersoonId != 0)
+            {
+                organisatie.ContactPersoon = _wijzigContactRepository.PersoonMetId(contactPersoonId);
+            }
+            
+
+            _wijzigContactRepository.UpdateOrganisatieEnBewaar(organisatie);
+            return RedirectToAction(nameof(HomeController.LaatstToegevoegdContactMetNaam), "Home", new { naam = organisatie.Naam, actiefContactSoort = ContactSoort.Organisatie.ToString() });
         }
 
         public IActionResult NieuweOrganisatie(Organisatie organisatie, string[] telefoonsNamen, string[] telefoonNummers, int? contactPersoonId)
@@ -54,7 +71,8 @@ namespace ContactManager.Controllers
             var model = new NieuwViewModel
             {
                 ContactSoort = contactSoort,
-                Titel = bestaalAl ? "Update " + contactSoort.ToString() : "Nieuwe " + contactSoort.ToString()
+                Titel = bestaalAl ? "Update " + contactSoort.ToString() : "Nieuwe " + contactSoort.ToString(),
+                BestaatAl = bestaalAl
             };
 
             if (contactSoort == ContactSoort.Persoon)
