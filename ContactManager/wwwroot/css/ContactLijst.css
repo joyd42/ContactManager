@@ -1,0 +1,117 @@
+﻿
+
+header form {
+    float: left;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+form[action="/Home/Contacten"] { margin-right: 50px; }
+
+#contactLijst a:link {
+    color: #666;
+    display: block;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#contactLijst a:visited {
+    color: #999999;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#contactLijst a:active,
+#contactLijst a:hover {
+    color: #bd5a35;
+    text-decoration: underline;
+}
+
+#contactLijst {
+    -moz-border-radius: 3px;
+    -moz-box-shadow: 0 1px 2px #d1d1d1;
+    -webkit-border-radius: 3px;
+    -webkit-box-shadow: 0 1px 2px #d1d1d1;
+    background: #eaebec;
+    border: #ccc 1px solid;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px #d1d1d1;
+    clear: both;
+    color: #666;
+    float: left;
+    text-shadow: 1px 1px 0 #fff;
+    width: 1000px;
+}
+
+#contactLijst th {
+    background: #ededed;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#ebebeb));
+    background: -moz-linear-gradient(top, #ededed, #ebebeb);
+    border-bottom: 1px solid #e0e0e0;
+    border-top: 1px solid #fafafa;
+    padding: 21px 25px 22px 25px;
+}
+
+#contactLijst th:first-child {
+    padding-left: 20px;
+    text-align: left;
+}
+
+#contactLijst tr:first-child th:first-child {
+    -moz-border-radius-topleft: 3px;
+    -webkit-border-top-left-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+#contactLijst tr:first-child th:last-child {
+    -moz-border-radius-topright: 3px;
+    -webkit-border-top-right-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+#contactLijst tr {
+    padding-left: 20px;
+    text-align: center;
+}
+
+#contactLijst td:first-child {
+    border-left: 0;
+    padding-left: 20px;
+    text-align: left;
+}
+
+#contactLijst td {
+    background: #fafafa;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#fafafa));
+    background: -moz-linear-gradient(top, #fbfbfb, #fafafa);
+    border-bottom: 1px solid #e0e0e0;
+    border-left: 1px solid #e0e0e0;
+    border-top: 1px solid #ffffff;
+    padding: 18px;
+}
+
+#contactLijst tr.even td {
+    background: #f6f6f6;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f6f6f6));
+    background: -moz-linear-gradient(top, #f8f8f8, #f6f6f6);
+}
+
+#contactLijst tr:last-child td { border-bottom: 0; }
+
+#contactLijst tr:last-child td:first-child {
+    -moz-border-radius-bottomleft: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+#contactLijst tr:last-child td:last-child {
+    -moz-border-radius-bottomright: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+#contactLijst tr:hover td {
+    background: #f2f2f2;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#f0f0f0));
+    background: -moz-linear-gradient(top, #f2f2f2, #f0f0f0);
+}

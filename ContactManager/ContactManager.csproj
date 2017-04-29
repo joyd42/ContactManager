@@ -13,7 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\js\NieuwContactJavascripts.js" />
+    <Content Include="wwwroot\css\ContactDetails.css" />
+    <Content Include="wwwroot\css\ContactForm.css" />
+    <Content Include="wwwroot\css\ContactLijst.css" />
+    <Content Include="wwwroot\css\ResetCss.css" />
+    <Content Include="wwwroot\js\FormScripts.js" />
   </ItemGroup>
 
   <ItemGroup>

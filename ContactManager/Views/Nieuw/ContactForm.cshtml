@@ -11,7 +11,8 @@
 
 
 @section pageSpecificScripts {
-    <script type="text/javascript" src="~/js/NieuwContactJavascripts.js"></script>
+    <script type="text/javascript" src="~/js/FormScripts.js"></script>
+    <link rel="stylesheet" href="~/css/ContactForm.css"/>
 
 }
 @{
@@ -51,7 +52,7 @@
 }
 
 
-@using (Html.BeginForm(formNaam, "Nieuw", FormMethod.Get))
+@using (Html.BeginForm(formNaam, "Nieuw", FormMethod.Get, new {name= "contactForm", id = "contactForm" }))
 {
     <p>
         
@@ -64,7 +65,7 @@
             var nameVeldVoorNaam = Model.ContactSoort + ".Naam";
         }
 
-        <label>Naam</label>
+        <label>Naam</label><br/>
         <input type="text" name="@nameVeldVoorNaam" value="@huidigContact.Naam"/>
         <br/>
 
@@ -73,7 +74,7 @@
         }
 
 
-        <label>Straat</label>
+        <label>Straat</label><br />
         <input type="text" name="@nameVeldVoorStraat" value="@huidigContact.Adres.Straat"/>
         <br/>
 
@@ -81,7 +82,7 @@
             var nameVeldVoorGemeente = Model.ContactSoort + ".Adres.Locatie";
         }
 
-        <label>Gemeente</label>
+        <label>Gemeente</label><br />
         <input type="text" name="@nameVeldVoorGemeente" value="@huidigContact.Adres.Locatie"/>
         <br/>
 
@@ -89,38 +90,15 @@
             var nameVeldVoorLand = Model.ContactSoort + ".Adres.Land";
         }
 
-        <label>Land</label>
+        <label>Land</label><br />
         <input type="text" name="@nameVeldVoorLand" value="@huidigContact.Adres.Land"/>
         <br/>
 
-        <label>Telefoons</label>
+        <label>Telefoons</label><br />
 
         <div id="telefoonVelden">
             <span id="spanToInsertAfter"></span>
             
-
-            
-
-            @*@for (var i = 0; i < huidigContact.Telefoons.Count; i++)
-            {
-                var telefoon = huidigContact.Telefoons[i];
-                <p>
-                    @{
-                        var nameVeldVoorTelefoon = Model.ContactSoort + ".Telefoons[" + i + "].";
-                        var nameVeldVoorTelefoonId = nameVeldVoorTelefoon + "Id";
-                        var nameVeldVoorTelefoonNaam = nameVeldVoorTelefoon + "Naam";
-                        var nameVeldVoorTelefoonNummer = nameVeldVoorTelefoon + "Nummer";
-                    }
-                    
-
-                    <input name="@nameVeldVoorTelefoonId" type="hidden" value="@telefoon.Id"/>
-                    Naam:
-                    <input name="@nameVeldVoorTelefoonNaam" type="text" value="@telefoon.Naam"/>
-                    Nummer:
-                    <input name="@nameVeldVoorTelefoonNummer" type="text" value="@telefoon.Nummer"/>
-                </p>               
-            }*@
-
 
             @foreach (var telefoon in huidigContact.Telefoons)
             {
@@ -143,7 +121,7 @@
         @if (Model.ContactSoort == ContactSoort.Persoon)
         {
 
-            <label>Geboorte Datum</label>
+            <label>Geboorte Datum</label><br />
 
             var nameVeldVoorGeboorteDatum = Model.ContactSoort + ".GeboorteDatum";
 
@@ -156,7 +134,7 @@
             var nameVeldVoorFoto = Model.ContactSoort + ".Mugshot";
             var mugShot = Model.BestaatAl == true ? Model.Persoon.Mugshot : "";
 
-            <label>Foto</label>
+            <label>Foto</label><br />
             <input type="text" name="@nameVeldVoorFoto" value="@mugShot"/>
             <br/>
         }
@@ -183,33 +161,3 @@
         <input type="submit" value="Bewaar"/>
     </p>
             }
-
-<script>
-    "use strict";
-
-    $(document).ready(function () {
-        // create DatePicker from input HTML element
-        $(".datumKiezer").datepicker();
-
-        const toonContactPersonen = function () {
-            var zoekString = $('#zoekveld').val();
-            var contactLijstDiv = $('<div id="contactLijst"></div>');
-
-            $.get("/Nieuw/Personen?naam=" + zoekString, function (data, status) {
-                var personen = data;
-                console.log(personen.length + "resultaten gevonden");
-
-                for (var i = 0; i < personen.length; i++) {
-                    var tableRow = $('<p><input type="radio" name="contactPersoonId" value="' + personen[i].id + '"> ' + personen[i].naam + '</p>');
-                    contactLijstDiv.append(tableRow);
-                }
-            });
-            $('#contactLijst').replaceWith(contactLijstDiv);
-        };
-
-        $("#zoekveld").keydown(toonContactPersonen);
-
-
-
-    });
-</script>

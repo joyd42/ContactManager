@@ -1,0 +1,14 @@
+﻿#contactForm { }
+
+#contactForm label {
+    font-size: larger;
+    font-weight: bold;
+}
+
+#contactForm input, #contactForm button { margin-bottom: 10px; }
+
+#contactForm input { width: 300px; }
+
+#contactForm input[type="submit"], #contactForm input[type="radio"] { width: inherit; }
+
+#contactForm input[name="telefoonsNamen"], #contactForm input[name="telefoonNummers"] { width: 150px; }

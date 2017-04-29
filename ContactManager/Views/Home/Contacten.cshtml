@@ -8,29 +8,40 @@
     Layout = "_Layout";
 }
 
-
-
-@using (Html.BeginForm(nameof(HomeController.Contacten), "Home", FormMethod.Get))
+@section pageSpecificScripts
 {
-    <p>
-        Naam: @Html.TextBox("filter")
-        <input type="hidden" name="actiefContactId" value="@Model.ActiefContactId"/>
-        <input type="submit" value="Zoek"/>
-
-    </p>
+    <link rel="stylesheet" href="~/css/ContactLijst.css"/>
+    <link rel="stylesheet" href="~/css/ContactDetails.css"/>
 }
 
-@using (Html.BeginForm(nameof(NieuwController.ContactForm), "Nieuw", FormMethod.Get))
-{
-    <button type="button" onclick="location.href = '@Url.Action(nameof(NieuwController.ContactForm), "Nieuw", new {contactSoort = ContactSoort.Persoon, bestaalAl = false})'">Maak @ContactSoort.Persoon.ToString()</button>
+@section pageHeader {
+
+
+    @using (Html.BeginForm(nameof(HomeController.Contacten), "Home", FormMethod.Get))
+    {
+        <p>
+            Naam: @Html.TextBox("filter")
+            <input type="hidden" name="actiefContactId" value="@Model.ActiefContactId"/>
+            <input type="submit" value="Zoek"/>
+
+        </p>
+    }
+
+    @using (Html.BeginForm(nameof(NieuwController.ContactForm), "Nieuw", FormMethod.Get))
+    {
+        <button type="button" onclick="location.href = '@Url.Action(nameof(NieuwController.ContactForm), "Nieuw", new {contactSoort = ContactSoort.Persoon, bestaalAl = false})'">Maak @ContactSoort.Persoon.ToString()</button>
+    }
+
+    @using (Html.BeginForm(nameof(NieuwController.ContactForm), "Nieuw", FormMethod.Get))
+    {
+        <button type="button" onclick="location.href = '@Url.Action(nameof(NieuwController.ContactForm), "Nieuw", new {contactSoort = ContactSoort.Organisatie, bestaalAl = false})'">Maak @ContactSoort.Organisatie.ToString()</button>
+    }
+
+
 }
 
-@using (Html.BeginForm(nameof(NieuwController.ContactForm), "Nieuw", FormMethod.Get))
-{
-    <button type="button" onclick="location.href = '@Url.Action(nameof(NieuwController.ContactForm), "Nieuw", new {contactSoort = ContactSoort.Organisatie, bestaalAl = false })'">Maak @ContactSoort.Organisatie.ToString()</button>
-}
 
-<table style="height: 80%">
+<table id="contactLijst">
     <tr>
         <th>Soort</th>
         <th>Naam</th>
@@ -42,101 +53,121 @@
     @foreach (var contact in Model.Contacten)
     {
         <tr>
-            <td>@contact.GetType().Name</td>
+            <td>@Html.ActionLink(contact.GetType().Name, "Contacten", new {Model.Filter, actiefContactId = contact.Id, actiefContactSoort = contact.GeefContactSoort()})</td>
             <td>@Html.ActionLink(contact.Naam, "Contacten", new {Model.Filter, actiefContactId = contact.Id, actiefContactSoort = contact.GeefContactSoort()})</td>
-            <td>@contact.Adres.Straat</td>
-            <td>@contact.Adres.Locatie</td>
-            <td>@contact.Adres.Land</td>
+            <td>@Html.ActionLink(contact.Adres.Straat, "Contacten", new {Model.Filter, actiefContactId = contact.Id, actiefContactSoort = contact.GeefContactSoort()})</td>
+            <td>@Html.ActionLink(contact.Adres.Locatie, "Contacten", new {Model.Filter, actiefContactId = contact.Id, actiefContactSoort = contact.GeefContactSoort()})</td>
+            <td>@Html.ActionLink(contact.Adres.Land, "Contacten", new {Model.Filter, actiefContactId = contact.Id, actiefContactSoort = contact.GeefContactSoort()})</td>
         </tr>
     }
 </table>
 
+
 @if (Model.ActiefContactId != 0)
 {
-    <div style="position: absolute; top: 10px; right: 10px">
-        Naam: @Model.ActiefContact.Naam<br/>
-        Straat: @Model.ActiefContact.Adres.Straat<br/>
-        Gemeente: @Model.ActiefContact.Adres.Locatie<br/>
-        Telefoon nummers: <br/>
+    <div id="contactDetails">
+        <div id="textDetails">
+            <h3>Actieve @Model.ActiefContact.GeefContactSoort()</h3>
+            <label>Naam:</label> @Model.ActiefContact.Naam<br/>
+            <label>Straat:</label> @Model.ActiefContact.Adres.Straat<br/>
+            <label>Gemeente:</label> @Model.ActiefContact.Adres.Locatie<br/>
+            <label>Telefoon nummers: </label><br/>
 
-        @foreach (var telefoon in Model.ActiefContact.Telefoons)
-        {
-            @telefoon.Naam
-            <text>: </text>
-            @telefoon.Nummer
-            <br/>
-        }
-
-        @if (Model.ActiefContact.GetType() == typeof(Persoon))
-        {
-            <text>Geboortedatum:</text>
-            var persoon = (Persoon) Model.ActiefContact;
-            if (persoon.GeboorteDatum != null)
+            @foreach (var telefoon in Model.ActiefContact.Telefoons)
             {
-                @persoon.GeboorteDatum.Value.ToString("dd-MM-yyyy")
-            }
-            ;
-            <br/>
-            <text>Foto:</text>
-            <img src="@persoon.Mugshot"/>
-        }
-        else
-        {
-            <text>Contactpersoon:</text>
-            var organisatieAlsContact = Model.ActiefContact;
-            if (organisatieAlsContact != null && organisatieAlsContact.Id != 0)
-            {
-                var organisatie = (Organisatie) organisatieAlsContact;
-                if (organisatie.ContactPersoon != null)
-                {
-                    @Html.ActionLink(organisatie.ContactPersoon.Naam, "Contacten", new {Model.Filter, actiefContactId = organisatie.ContactPersoon.Id, actiefContactSoort = organisatie.ContactPersoon.GeefContactSoort()})
-                }
-            }
-        }
-    
-        @using (Html.BeginForm(nameof(NieuwController.ContactForm), "Nieuw", FormMethod.Get))
-        {
-            Persoon InputPersoon = null;
-            Organisatie InputOrganisatie = null;
-            if (Model.ActiefContact.GetType() == typeof(Persoon))
-            {
-                InputPersoon = (Persoon)Model.ActiefContact;
-            }
-            else if (Model.ActiefContact.GetType() == typeof(Organisatie))
-            {
-                InputOrganisatie = (Organisatie) Model.ActiefContact;
+                @telefoon.Naam
+                <text>: </text>
+                @telefoon.Nummer
+                <br/>
             }
 
-
-            <button type="button" onclick="location.href = '@Url.Action(nameof(NieuwController.ContactForm), "Nieuw", new {contactSoort = Model.ActiefContact.GeefContactSoort(), contactId = Model.ActiefContactId, bestaalAl = true})'">Wijzig info</button>
-        }
-        @using (Html.BeginForm(nameof(NieuwController.VerwijderContact), "Nieuw", FormMethod.Get))
-        {
-            bool buttonEnabled;
-
-            if (Model.ActiefContact.GetType() == typeof(Persoon))
+            @if (Model.ActiefContact.GetType() == typeof(Persoon))
             {
+                <text><label>Geboortedatum:</label>
+                </text>
                 var persoon = (Persoon) Model.ActiefContact;
-                buttonEnabled = !persoon.IsContactPersoonVoorOrganisatie();
+                if (persoon.GeboorteDatum != null)
+                {
+                    @persoon.GeboorteDatum.Value.ToString("dd-MM-yyyy")
+                }
+                ;
+                <br/>
             }
             else
             {
-                buttonEnabled = true;
-            }
-
-
-            <button type="button" onclick="location.href = '@Url.Action(nameof(NieuwController.VerwijderContact), "Nieuw", new {ContactSoort = Model.ActiefContact.GeefContactSoort(), contactId = Model.ActiefContactId})'" 
-                    @{
-                        if (!buttonEnabled)
-                        {
-                            @:disabled="disabled"
-                        }
+                <text><label>
+                        Contactpersoon:
+                    </label>
+                </text>
+                var organisatieAlsContact = Model.ActiefContact;
+                if (organisatieAlsContact != null && organisatieAlsContact.Id != 0)
+                {
+                    var organisatie = (Organisatie) organisatieAlsContact;
+                    if (organisatie.ContactPersoon != null)
+                    {
+                        @Html.ActionLink(organisatie.ContactPersoon.Naam, "Contacten", new {Model.Filter, actiefContactId = organisatie.ContactPersoon.Id, actiefContactSoort = organisatie.ContactPersoon.GeefContactSoort()})
                     }
+                }
+            }
             
-                    >Verwijder @Model.ActiefContact.GeefContactSoort()</button>
+            <div id="contactKnoppen">
+
+                @using (Html.BeginForm(nameof(NieuwController.ContactForm), "Nieuw", FormMethod.Get))
+                {
+                    Persoon InputPersoon = null;
+                    Organisatie InputOrganisatie = null;
+                    if (Model.ActiefContact.GetType() == typeof(Persoon))
+                    {
+                        InputPersoon = (Persoon) Model.ActiefContact;
+                    }
+                    else if (Model.ActiefContact.GetType() == typeof(Organisatie))
+                    {
+                        InputOrganisatie = (Organisatie) Model.ActiefContact;
+                    }
+
+
+                    <button type="button" onclick="location.href = '@Url.Action(nameof(NieuwController.ContactForm), "Nieuw", new {contactSoort = Model.ActiefContact.GeefContactSoort(), contactId = Model.ActiefContactId, bestaalAl = true})'">Wijzig info @Model.ActiefContact.GeefContactSoort()</button>
+                }
+                @using (Html.BeginForm(nameof(NieuwController.VerwijderContact), "Nieuw", FormMethod.Get))
+                {
+                    bool buttonEnabled;
+
+                    if (Model.ActiefContact.GetType() == typeof(Persoon))
+                    {
+                        var persoon = (Persoon) Model.ActiefContact;
+                        buttonEnabled = !persoon.IsContactPersoonVoorOrganisatie();
+                    }
+                    else
+                    {
+                        buttonEnabled = true;
+                    }
+
+
+                    <button type="button" onclick="location.href = '@Url.Action(nameof(NieuwController.VerwijderContact), "Nieuw", new {ContactSoort = Model.ActiefContact.GeefContactSoort(), contactId = Model.ActiefContactId})'"
+                            @{
+                                if (!buttonEnabled)
+                                {
+                                    @: disabled="disabled"
+                                }
+                            }>
+                        Verwijder @Model.ActiefContact.GeefContactSoort()
+                    </button>
+                }
+
+            </div>
+        </div>
+
+        @if (Model.ActiefContact.GetType() == typeof(Persoon))
+        {
+            var persoon = (Persoon)Model.ActiefContact;
+            <div id="fotoDetail">
+                <img src="@persoon.Mugshot"/>
+            </div>
         }
+        <br/>
 
+        
 
-    </div> 
+        
+    </div>
 }
-
