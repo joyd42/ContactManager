@@ -8,20 +8,15 @@ namespace ContactManager.Data
         public Context(DbContextOptions options) : base(options)
         {
             Database.EnsureCreated();
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
-
-            
-            DoeContactMappings(modelBuilder);           
+            DoeContactMappings(modelBuilder);
             DoeOrganisatieMappings(modelBuilder);
             DoePersoonMappings(modelBuilder);
             DoeTelefoonMappings(modelBuilder);
             DoeAdresMappings(modelBuilder);
-
         }
 
         private static void DoeOrganisatieMappings(ModelBuilder modelBuilder)
@@ -64,12 +59,10 @@ namespace ContactManager.Data
                 .HasKey(c => c.Id);
             modelBuilder.Entity<Contact>()
                 .Property(c => c.Naam);
-
             modelBuilder.Entity<Contact>()
                 .HasOne(c => c.Adres)
                 .WithOne(a => a.Contact)
                 .HasForeignKey<Adres>(a => a.Id);
-
         }
 
         private static void DoeAdresMappings(ModelBuilder modelBuilder)
@@ -79,15 +72,12 @@ namespace ContactManager.Data
                 .ToTable("Adres");
             modelBuilder.Entity<Adres>()
                 .HasKey(a => a.Id);
-            
             modelBuilder.Entity<Adres>()
                 .Property(a => a.Straat);
             modelBuilder.Entity<Adres>()
                 .Property(a => a.Locatie);
             modelBuilder.Entity<Adres>()
                 .Property(a => a.Land);
-
-
         }
 
         public DbSet<Contact> Contacten { get; set; }

@@ -1,5 +1,4 @@
-﻿@using System.Runtime.InteropServices.ComTypes
-@using ContactManager.ViewModels
+﻿@using ContactManager.ViewModels
 @using ContactManager.Controllers
 @using ContactManager.Model
 @model ContactenViewModel
@@ -23,18 +22,21 @@
             Naam: @Html.TextBox("filter")
             <input type="hidden" name="actiefContactId" value="@Model.ActiefContactId"/>
             <input type="submit" value="Zoek"/>
-
         </p>
     }
+    
+    
 
-    @using (Html.BeginForm(nameof(NieuwController.ContactForm), "Nieuw", FormMethod.Get))
+    @using (Html.BeginForm(nameof(EditController.ContactForm), "Edit", FormMethod.Get))
     {
-        <button type="button" onclick="location.href = '@Url.Action(nameof(NieuwController.ContactForm), "Nieuw", new {contactSoort = ContactSoort.Persoon, bestaalAl = false})'">Maak @ContactSoort.Persoon.ToString()</button>
+        <button type="button" onclick="location.href = '@Url.Action(nameof(EditController.ContactForm), "Edit", new {contactSoort = ContactSoort.Persoon, bestaalAl = false})'">Maak @ContactSoort.Persoon.ToString()</button>
     }
+    
 
-    @using (Html.BeginForm(nameof(NieuwController.ContactForm), "Nieuw", FormMethod.Get))
+
+    @using (Html.BeginForm(nameof(EditController.ContactForm), "Edit", FormMethod.Get))
     {
-        <button type="button" onclick="location.href = '@Url.Action(nameof(NieuwController.ContactForm), "Nieuw", new {contactSoort = ContactSoort.Organisatie, bestaalAl = false})'">Maak @ContactSoort.Organisatie.ToString()</button>
+        <button type="button" onclick="location.href = '@Url.Action(nameof(EditController.ContactForm), "Edit", new {contactSoort = ContactSoort.Organisatie, bestaalAl = false})'">Maak @ContactSoort.Organisatie.ToString()</button>
     }
 
 
@@ -49,7 +51,6 @@
         <th>Gemeente</th>
         <th>Land</th>
     </tr>
-
     @foreach (var contact in Model.Contacten)
     {
         <tr>
@@ -72,7 +73,6 @@
             <label>Straat:</label> @Model.ActiefContact.Adres.Straat<br/>
             <label>Gemeente:</label> @Model.ActiefContact.Adres.Locatie<br/>
             <label>Telefoon nummers: </label><br/>
-
             @foreach (var telefoon in Model.ActiefContact.Telefoons)
             {
                 @telefoon.Naam
@@ -80,6 +80,7 @@
                 @telefoon.Nummer
                 <br/>
             }
+            
 
             @if (Model.ActiefContact.GetType() == typeof(Persoon))
             {
@@ -93,6 +94,8 @@
                 ;
                 <br/>
             }
+
+
             else
             {
                 <text><label>
@@ -111,8 +114,7 @@
             }
             
             <div id="contactKnoppen">
-
-                @using (Html.BeginForm(nameof(NieuwController.ContactForm), "Nieuw", FormMethod.Get))
+                @using (Html.BeginForm(nameof(EditController.ContactForm), "Edit", FormMethod.Get))
                 {
                     Persoon InputPersoon = null;
                     Organisatie InputOrganisatie = null;
@@ -124,14 +126,13 @@
                     {
                         InputOrganisatie = (Organisatie) Model.ActiefContact;
                     }
-
-
-                    <button type="button" onclick="location.href = '@Url.Action(nameof(NieuwController.ContactForm), "Nieuw", new {contactSoort = Model.ActiefContact.GeefContactSoort(), contactId = Model.ActiefContactId, bestaalAl = true})'">Wijzig info @Model.ActiefContact.GeefContactSoort()</button>
+                    <button type="button" onclick="location.href = '@Url.Action(nameof(EditController.ContactForm), "Edit", new {contactSoort = Model.ActiefContact.GeefContactSoort(), contactId = Model.ActiefContactId, bestaalAl = true})'">Wijzig info @Model.ActiefContact.GeefContactSoort()</button>
                 }
-                @using (Html.BeginForm(nameof(NieuwController.VerwijderContact), "Nieuw", FormMethod.Get))
+                
+
+                @using (Html.BeginForm(nameof(EditController.VerwijderContact), "Edit", FormMethod.Get))
                 {
                     bool buttonEnabled;
-
                     if (Model.ActiefContact.GetType() == typeof(Persoon))
                     {
                         var persoon = (Persoon) Model.ActiefContact;
@@ -143,7 +144,7 @@
                     }
 
 
-                    <button type="button" onclick="location.href = '@Url.Action(nameof(NieuwController.VerwijderContact), "Nieuw", new {ContactSoort = Model.ActiefContact.GeefContactSoort(), contactId = Model.ActiefContactId})'"
+                    <button type="button" onclick="location.href = '@Url.Action(nameof(EditController.VerwijderContact), "Edit", new {ContactSoort = Model.ActiefContact.GeefContactSoort(), contactId = Model.ActiefContactId})'"
                             @{
                                 if (!buttonEnabled)
                                 {
@@ -166,8 +167,6 @@
         }
         <br/>
 
-        
-
-        
+     
     </div>
 }

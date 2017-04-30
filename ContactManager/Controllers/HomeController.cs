@@ -20,7 +20,6 @@ namespace ContactManager.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-
             return RedirectToAction(nameof(Contacten));
         }
 
@@ -39,7 +38,6 @@ namespace ContactManager.Controllers
             };
 
 
-
             return View(model);
         }
 
@@ -49,34 +47,27 @@ namespace ContactManager.Controllers
             var id = contactLijst.Select(contact => contact.Id).Max();
             var laatstToegevoegdContact = GeefActiefContact(id, actiefContactSoort);
 
-            return RedirectToAction(nameof(Contacten), new { actiefContactId = id, actiefContact = laatstToegevoegdContact , actiefContactSoort = actiefContactSoort });
+            return RedirectToAction(nameof(Contacten),
+                new {actiefContactId = id, actiefContact = laatstToegevoegdContact, actiefContactSoort});
         }
 
         private Contact GeefActiefContact(int actiefContactId, ContactSoort? actiefContactSoort)
         {
             Contact actiefContact = null;
             if (actiefContactSoort == null)
-            {
-                actiefContact = new Persoon()
+                actiefContact = new Persoon
                 {
                     Naam = "",
                     Id = 0,
-                    Adres = { Id = 0, Land = "", Locatie = "", Straat = "" }
+                    Adres = {Id = 0, Land = "", Locatie = "", Straat = ""}
                 };
-            }
 
             else if (actiefContactSoort == ContactSoort.Organisatie)
-            {
                 actiefContact = _toonContactRepository.OrganisatieMetId(actiefContactId);
-            }
             else if (actiefContactSoort == ContactSoort.Persoon)
-            {
                 actiefContact = _toonContactRepository.PersoonMetId(actiefContactId);
-            }
 
             return actiefContact;
         }
-
-
     }
 }

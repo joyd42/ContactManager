@@ -9,7 +9,10 @@ namespace ContactManager.Service.Repositories
 {
     public class ToonContactRepository : IToonContactRepository
     {
-        protected ToonContactRepository() { }
+        protected ToonContactRepository()
+        {
+        }
+
         protected Context Context { get; set; }
 
         public ToonContactRepository(Context context)
@@ -20,16 +23,16 @@ namespace ContactManager.Service.Repositories
         public IEnumerable<Contact> AlleContacten()
         {
             return QueryContacten()
-                    .Take(100)
-                    .ToList();
+                .Take(100)
+                .ToList();
         }
 
         public IEnumerable<Contact> ContactenMetNaam(string naam)
         {
             return QueryContacten()
-                    .Where(c => c.Naam.Contains(naam))
-                    .Take(10)
-                    .ToList();
+                .Where(c => c.Naam.Contains(naam))
+                .Take(10)
+                .ToList();
         }
 
         public IEnumerable<Persoon> PersonenMetNaam(string naam)
@@ -68,7 +71,6 @@ namespace ContactManager.Service.Repositories
 
         private IQueryable<Contact> QueryContacten()
         {
-            
             return Query<Contact>()
                 .Include(c => c.Adres)
                 .Include(c => c.Telefoons);

@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using ContactManager.Data;
 using ContactManager.Model;
 using ContactManager.Service.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace ContactManager.Service.Repositories
 {
     public class WijzigContactRepository : ToonContactRepository, IWijzigContactRepository, IToonContactRepository
     {
-        protected WijzigContactRepository() { }
+        protected WijzigContactRepository()
+        {
+        }
 
         public WijzigContactRepository(Context context)
         {
@@ -32,6 +31,7 @@ namespace ContactManager.Service.Repositories
                 Context.AddRange(persoon.Telefoons);
             }
         }
+
         public void UpdatePersoonEnBewaar(Persoon persoon)
         {
             UpdatePersoon(persoon);
@@ -43,12 +43,9 @@ namespace ContactManager.Service.Repositories
             Context.Update(organisatie);
             Context.Update(organisatie.Adres);
             if (organisatie.ContactPersoon != null)
-            {
                 Context.Update(organisatie.ContactPersoon);
-            }
-            
-
         }
+
         public void UpdateOrganisatieEnBewaar(Organisatie organisatie)
         {
             UpdateOrganisatie(organisatie);

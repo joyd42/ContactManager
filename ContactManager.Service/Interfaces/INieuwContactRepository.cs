@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ContactManager.Model;
+﻿using ContactManager.Model;
 
 namespace ContactManager.Service.Interfaces
 {

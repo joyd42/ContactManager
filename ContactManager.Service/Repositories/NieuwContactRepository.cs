@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using ContactManager.Data;
 using ContactManager.Model;
 using ContactManager.Service.Interfaces;
@@ -10,14 +7,15 @@ namespace ContactManager.Service.Repositories
 {
     public class NieuwContactRepository : ToonContactRepository, INieuwContactRepository, IToonContactRepository
     {
-        protected NieuwContactRepository() { }
-
-
+        protected NieuwContactRepository()
+        {
+        }
 
         public NieuwContactRepository(Context context)
         {
             Context = context;
         }
+
         public void Bewaar()
         {
             Context.SaveChanges();
@@ -25,7 +23,7 @@ namespace ContactManager.Service.Repositories
 
         public void VoegOrganisatieToe(Organisatie organisatie)
         {
-            VoegToe<Organisatie>(organisatie);
+            VoegToe(organisatie);
         }
 
         public void VoegOrganisatieToeEnBewaar(Organisatie organisatie)
@@ -36,7 +34,7 @@ namespace ContactManager.Service.Repositories
 
         public void VoegPersoonToe(Persoon persoon)
         {
-            VoegToe<Persoon>(persoon);
+            VoegToe(persoon);
         }
 
         public void VoegPersoonToeEnBewaar(Persoon persoon)
@@ -54,6 +52,5 @@ namespace ContactManager.Service.Repositories
         {
             return Context.Set<T>();
         }
-
     }
 }

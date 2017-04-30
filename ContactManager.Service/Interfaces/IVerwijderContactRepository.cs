@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ContactManager.Model;
-
-namespace ContactManager.Service.Interfaces
+﻿namespace ContactManager.Service.Interfaces
 {
     public interface IVerwijderContactRepository : IToonContactRepository
     {
@@ -12,7 +7,5 @@ namespace ContactManager.Service.Interfaces
         void VerwijderOrganisatieEnBewaar(int organisatieId);
         void VerwijderPersoonEnBewaar(int persoonId);
         void Bewaar();
-        
-
     }
 }

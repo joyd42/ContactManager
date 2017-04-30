@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ContactManager.Data;
+﻿using ContactManager.Data;
 using ContactManager.Service.Interfaces;
 using ContactManager.Service.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -39,7 +35,6 @@ namespace ContactManager
             services.AddScoped<INieuwContactRepository, NieuwContactRepository>();
             services.AddScoped<IWijzigContactRepository, WijzigContactRepository>();
             services.AddScoped<IVerwijderContactRepository, VerwijderContactRepository>();
-            
             services.AddDbContext<Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ContactenCore")));
         }
@@ -69,7 +64,6 @@ namespace ContactManager
 
             app.UseMvcWithDefaultRoute();
             app.UseStaticFiles();
-
 
             app.Run(async (context) =>
             {

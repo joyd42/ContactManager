@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ContactManager.Data;
-using ContactManager.Model;
 using ContactManager.Service.Interfaces;
 
 namespace ContactManager.Service.Repositories
 {
     public class VerwijderContactRepository : ToonContactRepository, IVerwijderContactRepository, IToonContactRepository
     {
-        protected VerwijderContactRepository(){}
+        protected VerwijderContactRepository()
+        {
+        }
 
         public VerwijderContactRepository(Context context)
         {
@@ -19,7 +17,7 @@ namespace ContactManager.Service.Repositories
 
         public void VerwijderOrganisatie(int organisatieId)
         {
-            Organisatie organisatie = OrganisatieMetId(organisatieId);
+            var organisatie = OrganisatieMetId(organisatieId);
             Context.Contacten.Remove(organisatie);
         }
 
@@ -27,14 +25,8 @@ namespace ContactManager.Service.Repositories
         {
             var persoon = PersoonMetId(persoonId);
             if (PersoonIsContactPersoonVoorOrganisatie(persoonId))
-            {
                 throw new InvalidOperationException("Persoon is contactpersoon");
-            }
-            else
-            {
-                Context.Contacten.Remove(persoon);
-            }
-            
+            Context.Contacten.Remove(persoon);
         }
 
 
@@ -54,9 +46,5 @@ namespace ContactManager.Service.Repositories
         {
             Context.SaveChanges();
         }
-
-
-
-
     }
 }

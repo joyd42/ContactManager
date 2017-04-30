@@ -2,17 +2,13 @@
 
 var telefoonButtonCounter = 0;
 
-
 function nieuweTelefoon() {
     const nieuweTelefoonNaamVeldString = "<input type=\"text\" name=\"telefoonsNamen\" />";
     const nieuweTelefoonNummerVeldString = "<input type=\"text\" name=\"telefoonNummers\" />";
-
     const nieuweTelefoonVelden = document.createElement("p");
     nieuweTelefoonVelden.innerHTML = "Naam: " + nieuweTelefoonNaamVeldString + "Nummer:  " + nieuweTelefoonNummerVeldString;
     const telefoonVeldenDiv = document.getElementById("telefoonVelden");
-
     insertAfter(nieuweTelefoonVelden, telefoonVeldenDiv.lastChild);
-
     telefoonButtonCounter++;
 
 
@@ -40,7 +36,6 @@ function insertAfter(newNode, referenceNode) {
 
 $(document).ready(function () {
     $(".datumKiezer").datepicker();
-
     $("#zoekveld").keydown(toonContactPersonen);
 
 });
