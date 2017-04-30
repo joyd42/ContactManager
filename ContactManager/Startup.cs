@@ -38,7 +38,7 @@ namespace ContactManager
             services.AddScoped<IToonContactRepository, ToonContactRepository>();
             services.AddScoped<INieuwContactRepository, NieuwContactRepository>();
             services.AddScoped<IWijzigContactRepository, WijzigContactRepository>();
-            services.AddScoped<IVerwijderContractRepository, VerwijderContractRepository>();
+            services.AddScoped<IVerwijderContactRepository, VerwijderContactRepository>();
             
             services.AddDbContext<Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ContactenCore")));

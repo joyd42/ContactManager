@@ -147,7 +147,7 @@
             <text>Zoek een contactpersoon om toe te voegen</text><br/>
             <input type="text" id="zoekveld"/>
             <div id="contactLijst">
-                @if (Model.Organisatie.ContactPersoon != null)
+                @if (Model.Organisatie?.ContactPersoon != null)
                 {
                     <p>
                         <input name="contactPersoonId" value="@Model.Organisatie.ContactPersoon.Id" type="radio"/>@Model.Organisatie.ContactPersoon.Naam

@@ -13,6 +13,7 @@ namespace ContactManager.Service.Interfaces
         Persoon PersoonMetId(int id);
         IQueryable<Persoon> QueryPersonen();
         IQueryable<Organisatie> QueryOrganisaties();
+        bool PersoonIsContactPersoonVoorOrganisatie(int persoonId);
     }
 
 }

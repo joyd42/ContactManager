@@ -17,6 +17,8 @@ namespace ContactManager.ViewModels
 
         public Contact ActiefContact { get; set; }
 
+        public bool PersoonIsContactPersoon { get; set; }
+
         
     }
 }

@@ -135,7 +135,7 @@
                     if (Model.ActiefContact.GetType() == typeof(Persoon))
                     {
                         var persoon = (Persoon) Model.ActiefContact;
-                        buttonEnabled = !persoon.IsContactPersoonVoorOrganisatie();
+                        buttonEnabled = !Model.PersoonIsContactPersoon;
                     }
                     else
                     {

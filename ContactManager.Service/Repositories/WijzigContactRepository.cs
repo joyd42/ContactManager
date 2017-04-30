@@ -22,10 +22,15 @@ namespace ContactManager.Service.Repositories
         {
             Context.Update(persoon);
             Context.Update(persoon.Adres);
-            Context.UpdateRange(persoon.Telefoons);
 
-
-
+            try
+            {
+                Context.UpdateRange(persoon.Telefoons);
+            }
+            catch (InvalidOperationException exc)
+            {
+                Context.AddRange(persoon.Telefoons);
+            }
         }
         public void UpdatePersoonEnBewaar(Persoon persoon)
         {

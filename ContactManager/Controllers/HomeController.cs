@@ -34,19 +34,22 @@ namespace ContactManager.Controllers
                 Filter = filter,
                 ActiefContactId = actiefContactId,
                 ActiefContact = GeefActiefContact(actiefContactId, actiefContactSoort),
-                Titel = "Vind contact"
+                Titel = "Vind contact",
+                PersoonIsContactPersoon = _toonContactRepository.PersoonIsContactPersoonVoorOrganisatie(actiefContactId)
             };
+
 
 
             return View(model);
         }
 
-        public IActionResult LaatstToegevoegdContactMetNaam(string naam, string actiefContactSoort)
+        public IActionResult LaatstToegevoegdContactMetNaam(string naam, ContactSoort actiefContactSoort)
         {
             var contactLijst = _toonContactRepository.ContactenMetNaam(naam);
             var id = contactLijst.Select(contact => contact.Id).Max();
+            var laatstToegevoegdContact = GeefActiefContact(id, actiefContactSoort);
 
-            return RedirectToAction(nameof(Contacten), new { actiefContactId = id, actiefContactSoort = actiefContactSoort });
+            return RedirectToAction(nameof(Contacten), new { actiefContactId = id, actiefContact = laatstToegevoegdContact , actiefContactSoort = actiefContactSoort });
         }
 
         private Contact GeefActiefContact(int actiefContactId, ContactSoort? actiefContactSoort)

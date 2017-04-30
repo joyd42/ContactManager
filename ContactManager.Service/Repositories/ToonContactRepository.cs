@@ -79,5 +79,12 @@ namespace ContactManager.Service.Repositories
         {
             return Context.Set<T>();
         }
+
+        public bool PersoonIsContactPersoonVoorOrganisatie(int persoonId)
+        {
+            var organisatiesVoorPersoon = QueryOrganisaties().Where(o => o.ContactPersoon.Id.Equals(persoonId));
+
+            return organisatiesVoorPersoon.Any();
+        }
     }
 }

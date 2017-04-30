@@ -28,10 +28,6 @@ namespace ContactManager.Data
         {
             modelBuilder.Entity<Organisatie>();
             modelBuilder.Entity<Organisatie>()
-                .HasOne(o => o.ContactPersoon)
-                .WithOne(c => c.Organisatie)
-                .HasForeignKey<Organisatie>(o => o.ContactPersoonId);
-            modelBuilder.Entity<Organisatie>()
                 .HasDiscriminator<string>("Discriminator");
         }
 

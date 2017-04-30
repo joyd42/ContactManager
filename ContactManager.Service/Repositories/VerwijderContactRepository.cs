@@ -8,11 +8,11 @@ using ContactManager.Service.Interfaces;
 
 namespace ContactManager.Service.Repositories
 {
-    public class VerwijderContractRepository : ToonContactRepository, IVerwijderContractRepository, IToonContactRepository
+    public class VerwijderContactRepository : ToonContactRepository, IVerwijderContactRepository, IToonContactRepository
     {
-        protected VerwijderContractRepository(){}
+        protected VerwijderContactRepository(){}
 
-        public VerwijderContractRepository(Context context)
+        public VerwijderContactRepository(Context context)
         {
             Context = context;
         }
@@ -25,10 +25,10 @@ namespace ContactManager.Service.Repositories
 
         public void VerwijderPersoon(int persoonId)
         {
-            Persoon persoon = PersoonMetId(persoonId);
-            if (persoon.IsContactPersoonVoorOrganisatie())
+            var persoon = PersoonMetId(persoonId);
+            if (PersoonIsContactPersoonVoorOrganisatie(persoonId))
             {
-                throw new InvalidOperationException("Persoon is contactpersoon voor " + persoon.Organisatie.Naam);
+                throw new InvalidOperationException("Persoon is contactpersoon");
             }
             else
             {
@@ -55,11 +55,7 @@ namespace ContactManager.Service.Repositories
             Context.SaveChanges();
         }
 
-        public bool PersoonIsContactPersoonVoorOrganisatie(int persoonId)
-        {
-            Persoon persoon = PersoonMetId(persoonId);
-            return persoon.IsContactPersoonVoorOrganisatie();
-        }
+
 
 
     }

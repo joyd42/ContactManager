@@ -14,13 +14,13 @@ namespace ContactManager.Controllers
     {
         private readonly INieuwContactRepository _nieuwContactRepository;
         private readonly IWijzigContactRepository _wijzigContactRepository;
-        private readonly IVerwijderContractRepository _verwijderContractRepository;
+        private readonly IVerwijderContactRepository _verwijderContactRepository;
 
-        public NieuwController(INieuwContactRepository nieuwContactRepository, IWijzigContactRepository wijzigContactRepository, IVerwijderContractRepository verwijderContractRepository)
+        public NieuwController(INieuwContactRepository nieuwContactRepository, IWijzigContactRepository wijzigContactRepository, IVerwijderContactRepository verwijderContactRepository)
         {
             _nieuwContactRepository = nieuwContactRepository;
             _wijzigContactRepository = wijzigContactRepository;
-            _verwijderContractRepository = verwijderContractRepository;
+            _verwijderContactRepository = verwijderContactRepository;
         }
 
 
@@ -93,17 +93,17 @@ namespace ContactManager.Controllers
         {
             if (contactSoort == ContactSoort.Organisatie)
             {
-                _verwijderContractRepository.VerwijderOrganisatieEnBewaar(contactId);
+                _verwijderContactRepository.VerwijderOrganisatieEnBewaar(contactId);
             }
             else
             {
-                if (_verwijderContractRepository.PersoonIsContactPersoonVoorOrganisatie(contactId))
+                if (_verwijderContactRepository.PersoonIsContactPersoonVoorOrganisatie(contactId))
                 {
                     return Content("Persoon kan niet verwijderd worden omdat hij een contactpersoon is voor een organisatie");
                 }
                 else
                 {
-                    _verwijderContractRepository.VerwijderPersoonEnBewaar(contactId);
+                    _verwijderContactRepository.VerwijderPersoonEnBewaar(contactId);
                    
                 }
             }

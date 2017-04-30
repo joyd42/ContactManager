@@ -15,7 +15,6 @@ namespace ContactManager.Model
         {
             return ContactSoort.Organisatie;
         }
-        public int? ContactPersoonId { get; set; }
 
         public override string ToString()
         {

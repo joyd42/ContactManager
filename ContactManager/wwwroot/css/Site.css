@@ -5,6 +5,11 @@
     color: #666;
 }
 
+header a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
 h1, h2 , h3{
     
     font-weight: bolder;
